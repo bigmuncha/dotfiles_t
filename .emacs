@@ -7,9 +7,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes '(light-blue))
+ '(custom-safe-themes
+   '("234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" default))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(flycheck-clj-kondo cmake-mode swiper slime irony-eldoc clojure-mode-extra-font-locking magit doom-themes clojure-mode lsp-mode cider treemacs flycheck company irony helm company-irony flycheck-irony smartparens))
+   '(company-ctags helm-gtags neotree helm-etags-plus counsel-etags doom-themes clojure-mode lsp-mode cider lsp-treemacs flycheck company irony helm company-irony flycheck-irony projectile))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
@@ -132,22 +135,22 @@
 
 ;;; Rtags
 (require 'rtags)
-(unless (rtags-executable-find "rc") (error "Binary rc is not installed"))
+;;(unless (rtags-executable-find "rc") (error "Binary rc is not installed"))
 ;;(unless (rtags-executable-find "rdm") (error "Binary rdm is not installed"))
-(load-file "/home/omar/.emacs.d/rtags/src/rtags.el")
-(set-variable 'rtags-path "/home/omar/.emacs.d/rtags/bin")
+;;(load-file "/home/omar/.emacs.d/rtags/src/rtags.el")
+;;(set-variable 'rtags-path "/home/omar/.emacs.d/rtags/bin")
 
-(add-hook 'c-mode-hook 'rtags-start-process-unless-running)
-(add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
-(use-package rtags
-  :ensure t
-  :hook (c++-mode . rtags-start-process-unless-running)
-  :config (setq ;rtags-completions-enabled t
+;;(add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+;;(add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+;;(use-package rtags
+;;  :ensure t
+;;  :hook (c++-mode . rtags-start-process-unless-running)
+;;  :config (setq ;rtags-completions-enabled t
 ;		rtags-path "home/omar/.emacs.d/rtags/src/rtags.el"
 ;		rtags-rc-binary-name "home/omar/.emacs.d/rtags/bin/rc"
-		rtags-use-helm t
+;;		rtags-use-helm t
 ;		rtags-rdm-binary-name "home/omar/.emacs.d/rtags/bin/rdm"))
-))
+;;))
 ;; My own settings
 ;;(setq display-line-numbers-type t)
 (global-display-line-numbers-mode)
@@ -196,9 +199,10 @@
 (global-unset-key (kbd "S-<right>") )
 (global-set-key (kbd "C-o") 'next-window-any-frame)
 (setq treemacs-width 23)
-(setq treemacs--width-is-locked nil)
+(setq treemacs-width-is-initially-locked nil)
+
 (setq window-size-fixed nil)
-(global-set-key (kbd "<f12>") 'treemacs)
+(global-set-key (kbd "<f10>") 'treemacs)
 (global-unset-key (kbd "M-;") )
 (global-unset-key (kbd "M-:") )
 (global-set-key (kbd "M-;") 'eval-expression)
@@ -211,7 +215,7 @@
 (tooltip-mode      1)
 (menu-bar-mode 1) 
 (tool-bar-mode     -1) ;; отключаем tool-bar
-(scroll-bar-mode   -1) ;; отключаем полосу прокрутки
+;;(scroll-bar-mode   -1) ;; отключаем полосу прокрутки
 
 ;;(blink-cursor-mode -1) ;; курсор не мигает
 ;;(setq use-dialog-box     nil) ;; никаких графических диалогов и окон - все через минибуфер
@@ -292,7 +296,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight normal :height 120 :width normal)))))
+ '(default ((t (:family "Fira Code" :foundry "CTDB" :slant normal :weight normal :height 113 :width normal)))))
 
 ;;(global-set-key (kbd "C-`") buffer-file-name)
 ;; Common lisp
@@ -300,5 +304,13 @@
 (require 'cl-lib)
 (setq-default inferior-lisp-program "sbcl")
 (setq company-global-modes '(not shell-mode))
+(add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
+(add-hook 'treemacs-mode-hook (lambda () (text-scale-decrease 2)))
+(add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
 
-
+(add-hook 'treemacs-mode-hook (lambda() (scroll-bar-mode -1)))
+(font-lock-add-keywords 'c-mode
+                   '(("\\<\\([a-zA-Z_]*\\) *("  1 font-lock-keyword-face)))
+(global-set-key (kbd "<f12>") 'helm-etags-select)
+(setq c-default-style "bsd"
+  c-basic-offset 4)
