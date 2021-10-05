@@ -12,7 +12,7 @@
    '("234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" default))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(company-ctags helm-gtags neotree helm-etags-plus counsel-etags doom-themes clojure-mode lsp-mode cider lsp-treemacs flycheck company irony helm company-irony flycheck-irony projectile))
+   '(nix-mode clojure-mode lsp-mode cider lsp-treemacs flycheck company irony helm company-irony flycheck-irony projectile rtags))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
@@ -127,7 +127,7 @@
 
 
 (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
-(define-key helm-find-files-map (kbd "<backspace>") 'helm-find-files-up-one-level)
+;(define-key helm-find-files-map (kbd "<backspace>") 'helm-find-files-up-one-level)
 ;;(define-key helm- (kbd "TAB") 'helm-execute-persistent-action)
 
 ;;; projectile
@@ -170,7 +170,7 @@
 (setq auto-save-list-file-name nil)
 (setq auto-save-default nil)
 ;;(setq show-paren-style 'expression)
-(setq scroll-margin            10) ;; сдвигать буфер верх/вниз когда курсор в 10 шагах от верхней/нижней границы
+;(setq scroll-margin            10) ;; сдвигать буфер верх/вниз когда курсор в 10 шагах от верхней/нижней границы
 (setq scroll-conservatively 10000)
 (defun duplicate-line()
   (interactive)
@@ -223,7 +223,7 @@
 ;;(setq ring-bell-function 'ignore) ;; отключить звуковой сигнал
 
 (setq scroll-step               1) ;; вверх-вниз по 1 строке
-(setq scroll-margin            10) ;; сдвигать буфер верх/вниз когда курсор в 10 шагах от верхней/нижней границы  
+;;(setq scroll-margin            10) ;; сдвигать буфер верх/вниз когда курсор в 10 шагах от верхней/нижней границы  
 (setq scroll-conservatively 10000)
 ;;(load-theme 'doom-dracula t)
 
@@ -309,8 +309,20 @@
 (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
 
 (add-hook 'treemacs-mode-hook (lambda() (scroll-bar-mode -1)))
-(font-lock-add-keywords 'c-mode
-                   '(("\\<\\([a-zA-Z_]*\\) *("  1 font-lock-keyword-face)))
+(font-lock-add-keywords 'c-mode 
+			'(("\\<\\([a-zA-Z_]*\\) *("  1 font-lock-keyword-face)))
+(font-lock-add-keywords 'c++-mode 
+			'(("\\<\\([a-zA-Z_]*\\) *("  1 font-lock-keyword-face)))
+
 (global-set-key (kbd "<f12>") 'helm-etags-select)
+(global-set-key (kbd "M-/") 'xref-find-references)
+
 (setq c-default-style "bsd"
-  c-basic-offset 4)
+      c-basic-offset 4)
+
+;;(setf flycheck-clang-include-path
+;;      (append flycheck-clang-include-path
+;;	      '("/home/omar/ecotelecom/common/include"
+;;		"/home/omar/ecotelecom/zebos/zebos/pal"
+;;		"/home/omar/ecotelecom/data-plane/router/")))
+;;
