@@ -5,7 +5,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(c-basic-offset 8 t)
+ '(c-basic-offset 8)
+ '(counsel-find-file-extern-extensions '("mp4" "mkv" "xlsx" "pcap" "pcapng"))
  '(custom-safe-themes
    '("1ca05bdae217adeb636e9bc5e84c8f1d045be2c8004fafd5337d141d9b67a96f" "bd3b9675010d472170c5d540dded5c3d37d83b7c5414462737b60f44351fb3ed" "a0be7a38e2de974d1598cf247f607d5c1841dbcef1ccd97cded8bea95a7c7639" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
  '(grep-find-ignored-files
@@ -18,11 +19,24 @@
  '(lsp-clients-clangd-args
    '("--header-insertion=never" "--completion-style=detailed" "--limit-results=500" "--background-index=1" "--all-scopes-completion=1"))
  '(lsp-imenu-sort-methods '(kind position))
+ '(lsp-lens-enable t)
+ '(lsp-semantic-tokens-apply-modifiers nil)
+ '(lsp-semantic-tokens-enable t)
+ '(org-file-apps
+   '((auto-mode . emacs)
+     (directory . emacs)
+     ("\\.mm\\'" . default)
+     ("\\.x?html?\\'" . default)
+     ("\\.pdf\\'" . default)
+     ("\\.pcap\\'" . default)
+     ("\\.pcapng\\'" . default)))
  '(package-selected-packages
-   '(log4j-mode flycheck-mypy flycheck-pyflakes poetry flycheck-pycheckers docker sudo-edit dired-ranger yasnippet-snippets pandoc nano-modeline nano-theme elpy exwm rtags aggressive-indent python-mode ipython-shell-send highlight-escape-sequences highlight-function-calls fira-code-mode vterm ibuffer-vc ibuffer-project highlight-operators highlight-parentheses project color-identifiers-mode company-posframe telega doom-modeline clang-format json-mode yaml-mode clojure-mode lsp-mode helm projectile company-box smart-mode-line sml-modeline go-mode lsp-ui cider lsp-treemacs flycheck company))
- '(project-vc-ignores '(".cache/*" "*.cache*" "compile_commands.json"))
- '(projectile-globally-ignored-file-suffixes '(".idx"))
- '(projectile-globally-ignored-files '("TAGS" "compile_commands.json"))
+   '(magit nix-mode counsel pyenv-mode exec-path-from-shell nix-sandbox log4j-mode flycheck-mypy flycheck-pyflakes poetry flycheck-pycheckers docker sudo-edit dired-ranger yasnippet-snippets pandoc nano-modeline nano-theme elpy exwm rtags aggressive-indent python-mode ipython-shell-send highlight-escape-sequences highlight-function-calls fira-code-mode vterm ibuffer-vc ibuffer-project highlight-operators highlight-parentheses project color-identifiers-mode company-posframe telega doom-modeline clang-format json-mode yaml-mode clojure-mode lsp-mode helm projectile company-box smart-mode-line sml-modeline go-mode lsp-ui cider flycheck company))
+ '(project-vc-ignores '(".cache/*" "*.cache*" "compile_commands.json" "lldpv2"))
+ '(projectile-globally-ignored-directories
+   '(".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd" "lldpv2"))
+ '(projectile-globally-ignored-file-suffixes '(".idx" "lldpv2"))
+ '(projectile-globally-ignored-files '("TAGS" "compile_commands.json" "lldpv2"))
  '(show-paren-mode t)
  '(telega-company-tooltip-always-below nil)
  '(telega-server-libs-prefix "/home/omar/td/tdlib/")
@@ -87,7 +101,7 @@
  ;(global-set-key (kbd "M-x") 'helm-M-x)
 ;; (setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
 
-;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
 ;; (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
@@ -216,7 +230,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ricty Diminished L" :foundry "PfEd" :slant normal :weight normal :height 143 :width normal))))
+ '(default ((t (:family "Ricty Diminished" :foundry "PfEd" :slant normal :weight normal :height 128 :width normal))))
+ '(lsp-face-semhl-function ((t (:inherit font-lock-keyword-face))))
+ '(lsp-face-semhl-implementation ((t (:inherit font-lock-keyword-face :weight bold))))
+ '(lsp-face-semhl-macro ((t (:inherit font-lock-keyword-face))))
+ '(lsp-face-semhl-member ((t nil)))
+ '(lsp-face-semhl-method ((t (:inherit font-lock-keyword-face))))
+ '(lsp-face-semhl-parameter ((t (:inherit font-lock-variable-name-face))))
+ '(lsp-face-semhl-property ((t nil)))
+ '(lsp-face-semhl-variable ((t nil)))
  '(whitespace-empty ((t (:foreground "firebrick"))))
  '(whitespace-indentation ((t (:foreground "deep sky blue"))))
  '(whitespace-line ((t nil)))
@@ -228,7 +250,7 @@
 
 ;;; Treemacs
 ;;(add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t)))
-(add-hook 'treemacs-mode-hook (lambda () (text-scale-decrease 2)))
+;(add-hook 'treemacs-mode-hook (lambda () (text-scale-decrease 2)))
 (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
 
 (global-set-key (kbd "<f10>") 'treemacs)
@@ -293,9 +315,9 @@
       read-process-output-max (* 1024 1024)
       treemacs-space-between-root-nodes nil
       company-minimum-prefix-length 1
-      lsp-lens-enable t
-      lsp-signature-auto-activate nil
-      lsp-ui-doc-include-signature t
+     lsp-lens-enable t
+     lsp-signature-auto-activate nil
+     lsp-ui-doc-include-signature t
 					; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
 					; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
       )
@@ -321,7 +343,7 @@
 (add-hook 'c++-mode-hook 'highlight-operators-mode)
 (add-hook 'c-mode-hook 'highlight-operators-mode)
 (add-to-list 'auto-mode-alist '("\\.def\\'" . c-mode))
-(highlight-function-calls-mode t)
+;(highlight-function-calls-mode t)
 (line-number-mode 1)
 
 (setq whitespace-style
@@ -347,6 +369,8 @@
 	  )
 (add-hook 'telega-root-mode-hook 'visual-line-mode)
 (add-hook 'telega-chat-mode-hook 'visual-line-mode)
+(setcdr (assq t org-file-apps-gnu) 'browse-url-xdg-open)
+(setq telega-open-file-function 'org-open-file)
 
 (global-set-key (kbd "M-m") 'projectile-grep)
 
@@ -396,22 +420,60 @@
 ;; fetch the list of packages available
 
 ;; define list of packages to install
-(defvar myPackages
-  '(exec-path-from-shell
-    elpy
-    pyenv-mode))
+;; (defvar myPackages
+;;   '(exec-path-from-shell
+;;     elpy
+;;     pyenv-mode))
 
-;; install all packages in list
-(mapc #'(lambda (package)
-    (unless (package-installed-p package)
-      (package-install package)))
-      myPackages)
+;; ;; install all packages in list
+;; (mapc #'(lambda (package)
+;;     (unless (package-installed-p package)
+;;       (package-install package)))
+;;       myPackages)
 
-;; Use shell's $PATH
-(exec-path-from-shell-copy-env "PATH")
-(elpy-enable)
-(pyenv-mode)
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i --simple-prompt")
+;; ;; Use shell's $PATH
+;; (exec-path-from-shell-copy-env "PATH")
+;; (elpy-enable)
+;; (pyenv-mode)
+;; (setq python-shell-interpreter "ipython"
+;;       python-shell-interpreter-args "-i --simple-prompt")
 
 (global-set-key (kbd "C-x b") 'helm-mini)
+;; (defun buffer-binary-p (&optional buffer)
+;;   "Return whether BUFFER or the current buffer is binary.
+
+;; A binary buffer is defined as containing at least on null byte.
+
+;; Returns either nil, or the position of the first null byte."
+;;   (with-current-buffer (or buffer (current-buffer))
+;;     (save-excursion
+;;       (goto-char (point-min))
+;;       (search-forward (string ?\x00) nil t 1))))
+
+;; (defun hexl-if-binary ()
+;;   "If `hexl-mode' is not already active, and the current buffer
+;; is binary, activate `hexl-mode'."
+;;   (interactive)
+;;   (unless (eq major-mode 'hexl-mode)
+;;     (when (buffer-binary-p)
+;;       (hexl-mode))))
+
+;;(add-hook 'find-file-hooks 'hexl-if-binary)
+;; (defun counsel-locate-action-extern (x)
+;;   "Use xdg-open shell command on X."
+;;   (call-process shell-file-name nil
+;;                 nil nil
+;;                 shell-command-switch
+;;                 (format "%s %s"
+;;                         (if (eq system-type 'darwin)
+;;                             "open"
+;;                           "xdg-open")
+;;                         (shell-quote-argument x))))
+
+(add-hook 'prog-mode-hook #'hs-minor-mode)
+(global-set-key (kbd "C-=") 'hs-toggle-hiding)
+;(add-hook 'c-mode-hook 'hide-ifdef-mode)
+;(add-hook 'c++-mode-hook 'hide-ifdef-mode)
+;(add-hook 'c-mode-hook 'lsp-semantic-tokens-mode)
+;(add-hook 'c++-mode-hook 'lsp-semantic-tokens-mode)
+;('font-lock-function-name-face)
