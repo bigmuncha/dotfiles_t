@@ -5,23 +5,27 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(c-basic-offset 8)
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(c-basic-offset 4)
  '(counsel-find-file-extern-extensions '("mp4" "mkv" "xlsx" "pcap" "pcapng"))
  '(custom-safe-themes
-   '("1ca05bdae217adeb636e9bc5e84c8f1d045be2c8004fafd5337d141d9b67a96f" "bd3b9675010d472170c5d540dded5c3d37d83b7c5414462737b60f44351fb3ed" "a0be7a38e2de974d1598cf247f607d5c1841dbcef1ccd97cded8bea95a7c7639" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
+   '("0c6471dc1af916bfe2493300ddfec2d11c87e09d364e24b659a3c3de555c9e3d" "f0eb51d80f73b247eb03ab216f94e9f86177863fb7e48b44aacaddbfe3357cf1" "db5b906ccc66db25ccd23fc531a213a1afb500d717125d526d8ff67df768f2fc" "1ca05bdae217adeb636e9bc5e84c8f1d045be2c8004fafd5337d141d9b67a96f" "bd3b9675010d472170c5d540dded5c3d37d83b7c5414462737b60f44351fb3ed" "a0be7a38e2de974d1598cf247f607d5c1841dbcef1ccd97cded8bea95a7c7639" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
  '(grep-find-ignored-files
    '(".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl" "*.elc" "*.lof" "*.glo" "*.idx" "*.lot" "*.fmt" "*.tfm" "*.class" "*.fas" "*.lib" "*.mem" "*.x86f" "*.sparcf" "*.dfsl" "*.pfsl" "*.d64fsl" "*.p64fsl" "*.lx64fsl" "*.lx32fsl" "*.dx64fsl" "*.dx32fsl" "*.fx64fsl" "*.fx32fsl" "*.sx64fsl" "*.sx32fsl" "*.wx64fsl" "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo" "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr" "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo" "compile_commands.json"))
  '(helm-buffer-max-length 40)
  '(helm-grep-ignored-files
    '(".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl" "*.elc" "*.lof" "*.glo" "*.idx" "*.lot" "*.fmt" "*.tfm" "*.class" "*.fas" "*.lib" "*.mem" "*.x86f" "*.sparcf" "*.dfsl" "*.pfsl" "*.d64fsl" "*.p64fsl" "*.lx64fsl" "*.lx32fsl" "*.dx64fsl" "*.dx32fsl" "*.fx64fsl" "*.fx32fsl" "*.sx64fsl" "*.sx32fsl" "*.wx64fsl" "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo" "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr" "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo" "compile_commands.json"))
  '(history-delete-duplicates t)
- '(lsp-clangd-binary-path "/usr/bin/clangd")
+ '(indent-tabs-mode t)
+ '(lsp-clangd-binary-path "/usr/bin/clangd-13")
  '(lsp-clients-clangd-args
-   '("--header-insertion=never" "--completion-style=detailed" "--limit-results=500" "--background-index=1" "--all-scopes-completion=1"))
+   '("--header-insertion=never" "--completion-style=detailed" "--limit-results=500" "--background-index" "--all-scopes-completion=1" "-j=6" "--clang-tidy=1"))
  '(lsp-imenu-sort-methods '(kind position))
  '(lsp-lens-enable t)
  '(lsp-semantic-tokens-apply-modifiers nil)
  '(lsp-semantic-tokens-enable t)
+ '(lsp-ui-doc-show-with-cursor t)
  '(org-file-apps
    '((auto-mode . emacs)
      (directory . emacs)
@@ -31,12 +35,12 @@
      ("\\.pcap\\'" . default)
      ("\\.pcapng\\'" . default)))
  '(package-selected-packages
-   '(magit nix-mode counsel pyenv-mode exec-path-from-shell nix-sandbox log4j-mode flycheck-mypy flycheck-pyflakes poetry flycheck-pycheckers docker sudo-edit dired-ranger yasnippet-snippets pandoc nano-modeline nano-theme elpy exwm rtags aggressive-indent python-mode ipython-shell-send highlight-escape-sequences highlight-function-calls fira-code-mode vterm ibuffer-vc ibuffer-project highlight-operators highlight-parentheses project color-identifiers-mode company-posframe telega doom-modeline clang-format json-mode yaml-mode clojure-mode lsp-mode helm projectile company-box smart-mode-line sml-modeline go-mode lsp-ui cider flycheck company))
- '(project-vc-ignores '(".cache/*" "*.cache*" "compile_commands.json" "lldpv2"))
+   '(nasm-mode pcap-mode lsp-p4 p4 evil flycheck-clang-tidy dap-mode clojure-mode-extra-font-locking magit nix-mode counsel pyenv-mode exec-path-from-shell nix-sandbox log4j-mode flycheck-mypy flycheck-pyflakes poetry flycheck-pycheckers docker sudo-edit dired-ranger yasnippet-snippets pandoc nano-modeline nano-theme elpy exwm rtags aggressive-indent python-mode ipython-shell-send highlight-escape-sequences highlight-function-calls fira-code-mode vterm ibuffer-vc ibuffer-project highlight-operators highlight-parentheses project color-identifiers-mode company-posframe telega doom-modeline clang-format json-mode yaml-mode clojure-mode lsp-mode helm projectile company-box smart-mode-line sml-modeline go-mode lsp-ui cider flycheck company))
+ '(project-vc-ignores '(".cache/*" "*.cache*" "compile_commands.json"))
  '(projectile-globally-ignored-directories
-   '(".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd" "lldpv2"))
- '(projectile-globally-ignored-file-suffixes '(".idx" "lldpv2"))
- '(projectile-globally-ignored-files '("TAGS" "compile_commands.json" "lldpv2"))
+   '(".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd"))
+ '(projectile-globally-ignored-file-suffixes '(".idx"))
+ '(projectile-globally-ignored-files '("TAGS" "compile_commands.json"))
  '(show-paren-mode t)
  '(telega-company-tooltip-always-below nil)
  '(telega-server-libs-prefix "/home/omar/td/tdlib/")
@@ -52,7 +56,9 @@
 		   [36])
      (tab-mark 9
 	       [124 9]
-	       [92 9]))))
+	       [92 9])))
+ '(widget-image-enable nil)
+ '(x-underline-at-descent-line t))
 
 
 ;;; Package settings
@@ -83,53 +89,12 @@
  
 (add-hook 'c-mode-hook 'lsp)
 (add-hook 'c++-mode-hook 'lsp)
-;;;;
-;;;flycheck
-;;(global-flycheck-mode)
-;(require 'helm-config)
-
-;; ;;; Helm
-;;  (setq ;;to end or beginning of source when reaching top or bottom of source.
-;; ;  helm-move-to-line-cycle-in-source t
-;;   ;; search for library in `require' and `declare-function' sexp.
-;;   helm-ff-search-library-in-sexp t
-;; ;;  ;; scroll 8 lines other window using M-<next>/M-<prior>
-;;   helm-scroll-amount 8
-;;   helm-ff-file-name-history-use-recentf t
-;;   helm-echo-input-in-header-line t)
-
- ;(global-set-key (kbd "M-x") 'helm-M-x)
-;; (setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
-
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-
-;; (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-
-;;  (setq helm-buffers-fuzzy-matching t
-;;        helm-recentf-fuzzy-match t)
-
-;; (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
-
-;open helm buffer inside current window, not occupy whole other window
-;; (setq helm-split-window-in-side-p t)
-;; (setq helm-autoresize-max-height 50)
-;; (setq helm-autoresize-min-height 30)
-;; (helm-autoresize-mode 1)
-;; (helm-mode 1)
-;; (add-hook 'prog-mode-hook 'line-number-mode)
-;; (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-;; (add-hook 'yaml-mode-hook 'display-line-numbers-mode)
-;(define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
-
-;(define-key helm-find-files-map (kbd "<backspace>") 'helm-find-files-up-one-level)
-;;(define-key helm- (kbd "TAB") 'helm-execute-persistent-action)
 
 ;;; projectile
 (projectile-global-mode)
 
 
 ;;; Display
-;;(ad)(global-display-line-numbers-mode)
 
 (setq inhibit-splash-screen   t)
 (setq ingibit-startup-message t) ;; экран приветствия можно вызвать комбинацией C-h C-a
@@ -139,14 +104,14 @@
 ;(setq show-paren-style 'expression) ;; выделить цветом выражения между {},[],()
 
 (electric-pair-mode    1) ;; автозакрытие {},[],() с переводом курсора внутрь скобок
-;;(electric-indent-mode 1) ;; ; отключить индентацию  electric-indent-mod'ом (default in Emacs-24.4)
+
 
 
 (setq auto-save-list-file-name nil)
 (setq auto-save-default nil)
 
 (global-set-key (kbd "C-,") (kbd "RET"))
-;;(global-set-key (kbd "C--") (kbd "C-/"))
+
 (global-unset-key "\C-z")
 (global-set-key "\C-z" 'advertised-undo)
 
@@ -174,8 +139,6 @@
 (menu-bar-mode 1) 
 (tool-bar-mode     -1) ;; отключаем tool-bar
 
-;;(blink-cursor-mode -1) ;; курсор не мигает
-;;(setq use-dialog-box     nil) ;; никаких графических диалогов и окон - все через минибуфер
 (setq redisplay-dont-pause t)  ;; лучшая отрисовка буфера
 ;;(setq ring-bell-function 'ignore) ;; отключить звуковой сигнал
 
@@ -184,32 +147,8 @@
 (setq scroll-conservatively 10000)
 ;(load-theme 'nano-dark t)
 (load-theme 'light-blue t)
-;; для рефакторинга кода
-;;    Run M-x swiper-all type your regex, it will list all results, you can move with up/down to see a preview for each result.
-;; Now press M-q and it will ask you what you want to replace the matches with, type it and press enter.
-   ;; It will now walk you through an interactive replace, you can use  y/n/! on each, y to replace, n to skip, and ! to replace all without asking.
-
-;;M-x swipper-all
-;;набираешь то что необходимо заменить
-;;M-q
-;;набираешь то на что хочешь заменить
-;;идет опрос типо тут надо а тут не надо нажимаешь для каждого у н или ! для всего
 
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-
-
-;; (defun next-code-buffer ()
-;;   (interactive)
-;;   (let (( bread-crumb (buffer-name) ))
-;;     (next-buffer)
-;;     (while
-;;         (and
-;; 	 (string-match-p "^\*" (buffer-name))
-
-;;          (not ( equal bread-crumb (buffer-name) )) )
-;;       (next-buffer))))
-;; (global-set-key [remap next-buffer] 'next-code-buffer)
 
  (defface font-lock-func-face 
      '((nil (:foreground "#7F0055" :weight bold))
@@ -415,65 +354,33 @@
   (define-key view-mode-map (kbd "l") 'forward-char))
 (set-default 'truncate-lines t)
 
-;; activate all packages
-
-;; fetch the list of packages available
-
-;; define list of packages to install
-;; (defvar myPackages
-;;   '(exec-path-from-shell
-;;     elpy
-;;     pyenv-mode))
-
-;; ;; install all packages in list
-;; (mapc #'(lambda (package)
-;;     (unless (package-installed-p package)
-;;       (package-install package)))
-;;       myPackages)
-
-;; ;; Use shell's $PATH
-;; (exec-path-from-shell-copy-env "PATH")
-;; (elpy-enable)
-;; (pyenv-mode)
-;; (setq python-shell-interpreter "ipython"
-;;       python-shell-interpreter-args "-i --simple-prompt")
 
 (global-set-key (kbd "C-x b") 'helm-mini)
-;; (defun buffer-binary-p (&optional buffer)
-;;   "Return whether BUFFER or the current buffer is binary.
-
-;; A binary buffer is defined as containing at least on null byte.
-
-;; Returns either nil, or the position of the first null byte."
-;;   (with-current-buffer (or buffer (current-buffer))
-;;     (save-excursion
-;;       (goto-char (point-min))
-;;       (search-forward (string ?\x00) nil t 1))))
-
-;; (defun hexl-if-binary ()
-;;   "If `hexl-mode' is not already active, and the current buffer
-;; is binary, activate `hexl-mode'."
-;;   (interactive)
-;;   (unless (eq major-mode 'hexl-mode)
-;;     (when (buffer-binary-p)
-;;       (hexl-mode))))
-
-;;(add-hook 'find-file-hooks 'hexl-if-binary)
-;; (defun counsel-locate-action-extern (x)
-;;   "Use xdg-open shell command on X."
-;;   (call-process shell-file-name nil
-;;                 nil nil
-;;                 shell-command-switch
-;;                 (format "%s %s"
-;;                         (if (eq system-type 'darwin)
-;;                             "open"
-;;                           "xdg-open")
-;;                         (shell-quote-argument x))))
 
 (add-hook 'prog-mode-hook #'hs-minor-mode)
 (global-set-key (kbd "C-=") 'hs-toggle-hiding)
-;(add-hook 'c-mode-hook 'hide-ifdef-mode)
-;(add-hook 'c++-mode-hook 'hide-ifdef-mode)
-;(add-hook 'c-mode-hook 'lsp-semantic-tokens-mode)
-;(add-hook 'c++-mode-hook 'lsp-semantic-tokens-mode)
+(add-hook 'c-mode-hook 'hide-ifdef-mode)
+(add-hook 'c++-mode-hook 'hide-ifdef-mode)
+;;(add-hook 'c-mode-hook 'lsp-semantic-tokens-mode)
+;;(add-hook 'c++-mode-hook 'lsp-semantic-tokens-mode)
 ;('font-lock-function-name-face)
+    (use-package dap-mode
+      :ensure t
+      :config
+      (require 'dap-lldb)
+      (require 'dap-cpptools))
+
+(add-hook 'c++-mode-hook (lambda () (setq comment-start "/* "
+                                          comment-end   " */")))
+(add-hook 'c-mode-hook (lambda () (setq comment-start "/* "
+                                        comment-end   " */")))
+
+(setq hs-special-modes-alist
+      '((c-mode "[{[(]" "[)]}]" "/[*/]"  nil nil)
+       (c++-mode "{" "}" "/[*/]" nil nil)
+       (bibtex-mode ("@\\S(*\\(\\s(\\)" 1))
+       (java-mode "{" "}" "/[*/]" nil nil)
+       (js-mode "{" "}" "/[*/]" nil)
+       (mhtml-mode "{\\|<[^/>]*?" "}\\|</[^/>]*[^/]>" "<!--" mhtml-forward nil)))
+
+
