@@ -17,10 +17,11 @@ nixbuilder - будут ошибки, но он создаст пустую па
 sudo chown omar:omar /nix
 
 ** включение ссш
+#+begin_example
 sudo ip tuntap add tap0 mode tap
 sudo ip link set up dev tap0
 sudo ip a a 192.168.255.2/24 dev tap0
-
+#+end_example
 ** откат git
 git reset HEAD~10 (количество коммитов в ветке)
 git status
