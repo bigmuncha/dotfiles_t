@@ -1,0 +1,353 @@
+
+  
+** поиск пробелов в конфигд:
+grep --exclude-dir='.git' --exclude-dir='.ecoplatform' --exclude-dir='.ecobuild' --exclude-dir='drtestsuites' --exclude-dir='ecopkgs' -r -n '[[:blank:]]$' .
+
+** сборка лайфсд
+ecorouter/ecobuild_livecd.sh -b -m -D
+
+** удаление старых сборок
+nix-channel --remove nixpkgs
+nix-channel --add https://files.rdp.ru/src/nixpkgs/nixpkgs-ecorouter nixpkgs
+nix-channel --update
+
+** если поломался nix образ:
+rm /nix 
+nixbuilder - будут ошибки, но он создаст пустую папку(можно создать самому)
+sudo chown omar:omar /nix
+
+** включение ссш
+sudo ip tuntap add tap0 mode tap
+sudo ip link set up dev tap0
+sudo ip a a 192.168.255.2/24 dev tap0
+
+** откат git
+git reset HEAD~10 (количество коммитов в ветке)
+git status
+git add - добавляешь только нужные файлы
+git commit -m
+git push 
+
+** сабмодули гит
+   git submodule init
+   git submodule update --recursive
+** #####
+conf term
+interface omar
+ip address 1.1.1.1/24
+C^D
+port ge0
+service-instance omar1
+encapsulation untagged
+connect ip interface omar
+<<<<
+configure termina
+interface omar
+shutdown
+no shutdown
+
+** развертка тестов
+скачать docker-compose.yml(лежит в Downloads)
+cd Downloads/
+ 1999  docker-compose up -d 
+ 2000  docker ps
+ 2001  docker exec -it cirunner1 bash
+
+  ls
+    2  cd opt/
+    3  ls
+    4  mv 5c7fb5ij7r0vx8zvw188vfs9g4n5x55n-ecorouter-livecd-debug-x86_64-linux.iso/iso/ecorouter-livecd-debug-x86_64-linux.iso  ./
+    5  ls
+    6  ./play.sh --iso-version=ecorouter-livecd-debug-x86_64-linux.iso --scenario=radius --keep-failed
+    7  ./play.sh --iso-version=release --scenario=scenario-name --keep-failed
+    8  ./play.sh --iso-version=ecorouter-livecd-debug-x86_64-linux.iso --scenario=radius --keep-failed
+    9  ls
+   10  history
+   нужно завалить тест, чтобы получить управление докера
+ -> подключение к виртуалкам
+ docker exec -it cirunner1 telnet 0 2001
+
+** создание bmi интерфейса
+   1. BMI
+   2. subscriber-map
+      
+
+*** !!!
+    1) preffix-list - кто?
+    2) filter-map policy - что за трафик?
+    3) subscriber-policy - по скорости
+    4) subscriber-service
+
+       subscriber-map
+       bmi
+       session-trigger ip
+
+**** Пример настройки
+     создаешь интерфейс bmi.
+     conf terminal
+     ip prefix-list omar permit 111.1.1.0/24
+     filter-map policy ipv4 omar 10
+     match any any any
+     set accept
+     exit
+     subscriber-policy omar
+     set filter-map in omar
+     set filter-map out omar
+     bandwidth in mbps 1
+     bandwidth out mbps 1
+     exit
+     subscriber-service omar
+     set policy omar
+     exit
+     subscriber-map omar 10
+     match dynamic prefix-list omar
+     set subscriber-service omar
+     exit
+     interface bmi.1
+     subscriber-map omar
+     session-trigger ip
+!
+no service password-encryption
+!
+hw mgmt ip 192.168.255.1/24
+!
+ip vrf management
+!
+class-map default
+!
+security default
+!
+security none vrf management
+!
+mpls propagate-ttl
+!
+ip domain-lookup
+filter-map policy ipv4 omar 10
+ match any any any
+ set accept
+!
+!
+ip pim register-rp-reachability
+!
+bgp extended-asn-cap 
+!
+ip prefix-list omar seq 5 permit 111.1.1.3/32 eq 32
+!
+line con 0
+line vty 0 39
+!
+subscriber-policy omar
+ bandwidth in mbps 1
+ bandwidth out mbps 1
+ set filter-map in omar
+ set filter-map out omar
+!
+subscriber-service omar
+ set policy omar
+!
+subscriber-map omar 10
+ match static prefix-list omaruntagged
+ set idle-timeout 30
+ set session-timeout 1440
+ set subscriber-service omar
+!
+snmp-server enable snmp mgmt
+snmp-server community omar ro
+!
+port ge0
+ mtu 9728
+ service-instance omar
+  encapsulation untagged
+!
+port ge1
+ mtu 9728
+!
+port ge2
+ mtu 9728
+!
+interface bmi.1
+ ip mtu 1500
+ connect port ge0 service-instance omar
+ subscriber-map omar
+ session-trigger ip
+ reject-timeout 5
+ ip malicious-action drop
+ ip address 111.1.1.2/24
+!
+arp request-interval 1
+arp request-number 3
+arp expiration-period 5
+arp solicitation-rate 2
+arp ip-collision-time 8
+arp incomplete-time 60
+!
+end
+
+** Perfomance
+   http://ithare.com/infographics-operation-costs-in-cpu-clock-cycles/
+   
+** GV files
+   cat network.gv | dot -Tsvg > output.svg
+   batcat network.gv | dot -Tsvg > output.svg && eog output.svg &&rm output.svg
+
+** древовидный вывод гит
+   git log --oneline --decorate --graph --all
+
+** gdb
+   https://habr.com/ru/post/535960/
+   https://habr.com/ru/post/491534/
+   https://visualgdb.com/gdbreference/commands/
+   x/20bc data - вывод в хексах массива data 20 elem
+   x/20hex data -
+   tldr - https://courses.cs.washington.edu/courses/cse351/20au/gdb/gdbnotes-x86-64.pdf
+   атач к корке
+      gdb -c core.onmd.1260 /nix/store/3ah2vfkdxkf9ggc3qk1r09y5aiw4rvyk-ecorouteros-debug-1.4.4/bin/onmd
+      up - подняться по бектрейсу
+      
+   
+
+
+** очистка конфига
+
+   yarus#copy empty-config startup-config 
+d
+
+   token Sgdv9Thj6Aw1CPGLAkiM
+
+** https://ohshitgit.com/ru
+
+** образы для булата(сначала офишл фектори а потом bul 406 или perf)
+   https://gitlab.rdp.ru/ecotelecom/ecotree/-/pipelines/338903
+
+** Сборка под целевые платформа
+   Yarus -  --brand="yarus-official"
+
+** minicom
+   sudo minicom -D /dev/ttyUSB0 -b 115200 -c on
+
+** Накатывание новых образов
+   ecorouter/ecobuild_image.sh --platform=ER-1004-2 -b -m
+   0) Скачать фэктори образ, скачать боевой образ
+   1) Загрузочная флешка
+      sudo dd if=PATH_TO_FACTORY/yarus-factorycd-x86_64-linux.iso of=/dev/sdb bs=2M; sudo sync
+   2) Заходим в биос(DEL) выбираем загрузку с флешки
+   3) Загружаемся, пишем YES, сохраняем passphrase, выдергиваем флешку, ребут
+   4) Заходим в админа, идем в /mnt/flash/config.yaml
+   5) Пишем версию и сериал намбер
+      version: 1
+      serial_number: SERIAL12345
+      пример https://gitlab.rdp.ru/ecotelecom/ecotree/-/wikis/config-yaml
+   6) Вставляем флешку с боевым образом
+   7) show images usb -> image install usb IMAGE 
+
+** Проект ecorouter
+   iso/er-helpers/systemd.nix сервисы на роутере
+** cns тесты
+   подключение к роутеру:
+     sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)"
+     навешиваешь ip адрес на интерфейс eth0 192.168.255.2 - конектишься по ссш
+
+   если не создается тап интерфейс
+   ip link delete ecorouter0
+   token Sgdv9Thj6Aw1CPGLAkiM
+
+   подключение к нодам
+   docker pull hub.rdp.ru/scapy_test:latest
+   docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy:latest" sh
+   0 tcpdump -i eth0 -c 1 arp
+   1 tcpdump -i eth0 -c 1 -vv
+   2 tcpdump -i eth0  -vv
+   3 tcpdump -i eth0 -c 1 arp
+   4 tcpdump -i eth0 -c 1 arp -w arp.pcap
+   5 tcpdump -r arp.pcap 
+   6 tcpreplay -i eth0 arp.pcap 
+   7 history
+   1996  docker exec -it node3 sh
+   1997  docker run -it --rm --network container:node3 --cap-add NET_ADMIN alpine sh
+   1998  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/cns/scapy:latest" sh
+   1999  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/cns/tshark:latest" sh
+   2000  docker run -it --rm --network container:node3 --cap-add NET_ADMIN busybox sh
+   2001  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy:latest" sh
+   2002  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy_test:latest" sh
+
+** configd
+   grep --exclude-dir='.git' --exclude-dir='.ecoplatform' --exclude-dir='.ecobuild' --exclude-dir='drtestsuites' --exclude-dir='ecopkgs' -r '[[:blank:]]$' . -n
+
+** zebos build
+   обновить сабмодули в зебос проекте
+   там же ввести команду:
+   ./ecobuild.sh -b -m --attr=zebos
+
+** Обновить все пакеты в емаксе   
+    1. M-x, list-packages
+    2. U, x
+    3. Спросят, хочешь ли ты обновить пакеты. Нажми y (или введи yes,
+    если у тебя не настроен сокращённый режим ввода yes/no).
+    4. Обязательно перезапусти EMACS.
+    c-x r t вставка колонки
+    kill-rectangle - выделить колонку
+    yank-rectange- вставить(без выделения), просто под курсором
+    
+       
+    
+** Стандартный конфиг
+   /mnt/flash/startupConfig
+
+** Конфигд демоны
+   /run/
+
+** wireguard
+   копируешь конфиг в папку /etc/wireguard/wg0.conf
+   sudo wg-quick up wg0
+** дока к роутеру
+   - https://www.rdp.ru/wp-content/uploads/ER_UserGuide.pdf
+
+** DP buckets
+   [[/home/omar/Pictures/image.png]]
+
+
+   show -bridge убрать
+   lldp run -> lldp enable
+   lldp-agent remove
+   
+007025
+** nmpa - скан портов (флаг -p)
+
+** grep
+ grep -B 4 -A 3 nsm_ercp_snmp_cli.c.o compile_commands.json - вывод строк сверху и снизу
+ 
+** emacs regexp
+   выбираешь helm-regexp
+   пишешь регекс пример:
+   исходная строка LLDP_ENCODE_PUT(some->ptr, mms);
+     рекекс LLDP_ENCODE_PUT(\([^;]+\)); TAB lldp_encode_put(\1, buf, size);
+     результат lldp_encode_putsome->ptr, mms, buf, size);
+
+** snmp
+!
+snmp-server enable snmp mgmt
+snmp-server community ecoBlaBla ro
+snmp-server community gfcvfnhb view main ro
+snmp-server community omar rw
+snmp-server view main .1 included
+snmp-server group main v3 priv read main
+snmp-server location adasko2
+snmp-server persistent-ifinde
+snmp-server user snmpUserRo group main auth md5 11111111 priv des 22222222
+!
+
+   snmpget -v 3 -u  snmpUserRo -a MD5 -A 11111111 -l authPriv -x DES -X 22222222  192.168.255.1 .1.3.6.1.4.1.45555.2.1.1.16.1.1.2.2.2.2.3.1.1
+   snmpget -v2c -c omar 192.168.255.1 .1.3.6.1.4.1.45555.2.1.1.16.1.1.2.2.2.2.3.1.1
+   snmpget -c ecoBlaBla -v 2c 192.168.255.1 1.3.111.2.802.1.1.13.1.3.4.0
+er-1004-95-rev1
+
+** переписать файл nix/store
+cp /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service /tmp
+chmod 777 /tmp/snmpd.service
+mount -o bind /tmp/snmpd.service /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service
+systemctl restart snmpd.service
+systemctl daemon-reload
+systemctl restart snmpd.service
+
+** число открытых дескрипторов у процесса
+       cd /proc/1355/fd , где 1355 pid процесса
