@@ -1,53 +1,37 @@
 
   
 ** поиск пробелов в конфигд:
-#+begin_example
 grep --exclude-dir='.git' --exclude-dir='.ecoplatform' --exclude-dir='.ecobuild' --exclude-dir='drtestsuites' --exclude-dir='ecopkgs' -r -n '[[:blank:]]$' .
-#+end_example
 
 ** сборка лайфсд
-#+begin_example
 ecorouter/ecobuild_livecd.sh -b -m -D
-#+end_example
 
 ** удаление старых сборок
-#+begin_example
 nix-channel --remove nixpkgs
 nix-channel --add https://files.rdp.ru/src/nixpkgs/nixpkgs-ecorouter nixpkgs
 nix-channel --update
-#+end_example
 
 ** если поломался nix образ:
-#+begin_example
 rm /nix 
 nixbuilder - будут ошибки, но он создаст пустую папку(можно создать самому)
 sudo chown omar:omar /nix
-#+end_example
 
 ** включение ссш
-#+begin_example
 sudo ip tuntap add tap0 mode tap
 sudo ip link set up dev tap0
 sudo ip a a 192.168.255.2/24 dev tap0
-#+end_example
 
 ** откат git
-#+begin_example
 git reset HEAD~10 (количество коммитов в ветке)
 git status
 git add - добавляешь только нужные файлы
 git commit -m
 git push 
-#+end_example
 
 ** сабмодули гит
-#+begin_example
-git submodule init
-git submodule update --recursive
-#+end_example
-
+   git submodule init
+   git submodule update --recursive
 ** #####
-#+begin_example
 conf term
 interface omar
 ip address 1.1.1.1/24
@@ -61,10 +45,8 @@ configure termina
 interface omar
 shutdown
 no shutdown
-#+end_example
 
 ** развертка тестов
-#+begin_example
 скачать docker-compose.yml(лежит в Downloads)
 cd Downloads/
  1999  docker-compose up -d 
@@ -84,7 +66,6 @@ cd Downloads/
    нужно завалить тест, чтобы получить управление докера
  -> подключение к виртуалкам
  docker exec -it cirunner1 telnet 0 2001
-#+end_example
 
 ** создание bmi интерфейса
    1. BMI
@@ -206,32 +187,32 @@ end
    http://ithare.com/infographics-operation-costs-in-cpu-clock-cycles/
    
 ** GV files
-#+begin_example
-cat network.gv | dot -Tsvg > output.svg
-batcat network.gv | dot -Tsvg > output.svg && eog output.svg &&rm output.svg
-#+end_example
+   cat network.gv | dot -Tsvg > output.svg
+   batcat network.gv | dot -Tsvg > output.svg && eog output.svg &&rm output.svg
 
 ** древовидный вывод гит
    git log --oneline --decorate --graph --all
 
 ** gdb
-#+begin_example
-https://habr.com/ru/post/535960/
-https://habr.com/ru/post/491534/
-https://visualgdb.com/gdbreference/commands/
-x/20bc data - вывод в хексах массива data 20 elem
-x/20hex data -
-tldr - https://courses.cs.washington.edu/courses/cse351/20au/gdb/gdbnotes-x86-64.pdf
-атач к корке
-   gdb -c core.onmd.1260 /nix/store/3ah2vfkdxkf9ggc3qk1r09y5aiw4rvyk-ecorouteros-debug-1.4.4/bin/onmd
-   up - подняться по бектрейсу
-#+end_example
-
-
+   https://habr.com/ru/post/535960/
+   https://habr.com/ru/post/491534/
+   https://visualgdb.com/gdbreference/commands/
+   x/20bc data - вывод в хексах массива data 20 elem
+   x/20hex data -
+   tldr - https://courses.cs.washington.edu/courses/cse351/20au/gdb/gdbnotes-x86-64.pdf
+   атач к корке
+      gdb -c core.onmd.1260 /nix/store/3ah2vfkdxkf9ggc3qk1r09y5aiw4rvyk-ecorouteros-debug-1.4.4/bin/onmd
+      up - подняться по бектрейсу
+      
+   
 
 
 ** очистка конфига
+
    yarus#copy empty-config startup-config 
+d
+
+   token Sgdv9Thj6Aw1CPGLAkiM
 
 ** https://ohshitgit.com/ru
 
@@ -262,10 +243,9 @@ tldr - https://courses.cs.washington.edu/courses/cse351/20au/gdb/gdbnotes-x86-64
 ** Проект ecorouter
    iso/er-helpers/systemd.nix сервисы на роутере
 ** cns тесты
-#+begin_example
-подключение к роутеру:
-sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)"
-навешиваешь ip адрес на интерфейс eth0 192.168.255.2 - конектишься по ссш
+   подключение к роутеру:
+     sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)"
+     навешиваешь ip адрес на интерфейс eth0 192.168.255.2 - конектишься по ссш
 
    если не создается тап интерфейс
    ip link delete ecorouter0
@@ -289,11 +269,12 @@ sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)"
    2000  docker run -it --rm --network container:node3 --cap-add NET_ADMIN busybox sh
    2001  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy:latest" sh
    2002  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy_test:latest" sh
-   #+end_example
 
 ** configd
    grep --exclude-dir='.git' --exclude-dir='.ecoplatform' --exclude-dir='.ecobuild' --exclude-dir='drtestsuites' --exclude-dir='ecopkgs' -r '[[:blank:]]$' . -n
 
+*
+   
 ** zebos build
    обновить сабмодули в зебос проекте
    там же ввести команду:
@@ -308,11 +289,7 @@ sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)"
     c-x r t вставка колонки
     kill-rectangle - выделить колонку
     yank-rectange- вставить(без выделения), просто под курсором
-
-** обернуть блок в емаксе
-#+begin_example
-C-c C-, e
-#+end_example
+    
        
     
 ** Стандартный конфиг
@@ -342,16 +319,15 @@ C-c C-, e
  grep -B 4 -A 3 nsm_ercp_snmp_cli.c.o compile_commands.json - вывод строк сверху и снизу
  
 ** emacs regexp
-#+begin_example
-выбираешь helm-regexp
-пишешь регекс пример:
-исходная строка LLDP_ENCODE_PUT(some->ptr, mms);
-рекекс LLDP_ENCODE_PUT(\([^;]+\)); TAB lldp_encode_put(\1, buf, size);
-результат lldp_encode_putsome->ptr, mms, buf, size);
-#+end_example
+   выбираешь helm-regexp
+   пишешь регекс пример:
+   исходная строка LLDP_ENCODE_PUT(some->ptr, mms);
+     рекекс LLDP_ENCODE_PUT(\([^;]+\)); TAB lldp_encode_put(\1, buf, size);
+     результат lldp_encode_putsome->ptr, mms, buf, size);
+** emacs обвести блок (org-mode)
+  C-c C-, e
 
 ** snmp
-#+begin_example
 !
 snmp-server enable snmp mgmt
 snmp-server community ecoBlaBla ro
@@ -368,17 +344,118 @@ snmp-server user snmpUserRo group main auth md5 11111111 priv des 22222222
    snmpget -v2c -c omar 192.168.255.1 .1.3.6.1.4.1.45555.2.1.1.16.1.1.2.2.2.2.3.1.1
    snmpget -c ecoBlaBla -v 2c 192.168.255.1 1.3.111.2.802.1.1.13.1.3.4.0
 er-1004-95-rev1
-#+end_example
 
 ** переписать файл nix/store
-#+begin_example
 cp /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service /tmp
 chmod 777 /tmp/snmpd.service
 mount -o bind /tmp/snmpd.service /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service
 systemctl restart snmpd.service
 systemctl daemon-reload
 systemctl restart snmpd.service
-#+end_example
 
 ** число открытых дескрипторов у процесса
        cd /proc/1355/fd , где 1355 pid процесса
+       ls -l /proc/1293/fd
+       
+** зависимости библиотеки
+ldd /nix/store/yz2igiqs4rzsc68z1z9kjnvns0hjb6si-ecotap-cp/lib/libecotap.so
+
+** загрзка A-image B-image
+  ecorouter#no boot b-image active 
+  Image B is marked as not active
+  ecorouter#boot 
+  a-image  b-image  
+  ecorouter#boot a-image active 
+  Image A is marked as active
+  ecorouter#write 
+  Building configuration...
+
+
+
+mlx_query_module_id:320 query_mcia_reg failed 
+** Включить санитайзер
+ CFLAGS+=-fsanitize=address -fno-omit-frame-pointer
+ LDFLAGS+=-fsanitize=address
+
+** Проблемы с докером(ubuntu 22.04)
+Основная проблема с cgrpoup2
+Devices cgroup ins`t mounted
+https://wiki.archlinux.org/title/cgroups#Enable_cgroup_v1
+в /etc/default/grub к GRUB_CMDLINE_LINUX_DEFAULT надо добавить
+    systemd.unified_cgroup_hierarchy=0
+    Вот так выглядит моя строчка
+    GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet
+    systemd.unified_cgroup_hierarchy=0"
+    после выполнить sudo update-grub и ребутнуться
+** Пробросить папку из докера в хост систему
+найти скрипт который запускает docker-compose файл:
+which nixbuilder
+/usr/local/bin/nixbuilder
+найти строку с volumes
+#+begin_src bash
+    volumes:
+      - ~:/workspace
+      - /dev/hugepages:/dev/hugepages
+      - /tmp/nixbuilder:/tmp
+      - ~/GNS3/images:/opt/GNS3/images
+      - /nix/:/nix
+#+end_src
+(я мапировал /nix в /nix)
+
+** Создать задержку между пингом
+ скачать alpine image из hub.rdp.ru
+ создать докер образ в GNS3
+ проставить ip адрес на интерфейс
+ bash-5.1# tc qdisc add dev eth0 root netem delay 700ms
+ bash-5.1# tc qdisc del dev eth0 root netem delay 700ms
+ вставляем и удаляем делей на интерфейсе
+
+
+ ** Запуск профилировщика на железе
+    Создать дебаг платформу(возможно дебаг платформа для твоей железки уже есть):
+       Рассмотрим пример с ER-406-CAS
+       В папке hardware_platform и в папке target_platform есть соответствующие nix файлы ER-406-CAS.nix
+       Добавим в target_platform файл ER-406-CASD.nix(Debug)
+       cкопируем туда такой код(смотреть ER-406-CAS, тут он подтянет настройки из hardware_platform)
+ #+begin_src nix
+  {
+  hardwarePlatform = "ER-406-CAS";
+  brand = "ecorouter-develop";
+  description = "1U 1x modular platform (core i5) (Debug)";
+  dpdkConfig = {
+    CONFIG_RTE_LIBRTE_MBUF_DEBUG = true;
+  };
+  dpBuilds = [
+    {
+      name = "release";
+      defines = {
+        CONFIG_DEBUG_ENABLED = true;
+        CONFIG_LOGGER_FASTPATH_ENABLED = true;
+        CONFIG_LOGGER_PACKETFLOW_ENABLED = true;
+      };
+      makeFlags = {
+        CONFIG_CONTROL_PLANE_INCLUDED = "yes";
+        CONFIG_LOAD_SYMBOLS = "yes";
+        CONFIG_COMPILE_OPTIMIZATION_ENABLED = "no";
+      };
+    }
+  ];
+  isDpDebug = true;
+  isZebosDebug = true;
+  isRarelyUsed = true;
+}
+#+end_src
+  самые главные флаги здесь isDpDebug и isZebosDebug
+  Пойдем в файл ecorouter/iso/upgrade.nix
+  увидим, что
+ #+begin_src nix    
+ optionals pc.isDpDebug [
+ linuxPackages.perf
+#+end_src
+ тоесть perf пакет добавляется только при выставленном флаге
+ можем также добавить (временно пакеты типо valgring strace oprofile) прямо в список пакетов сверху
+ соберем образ: ecorouter/ecobuild_image.sh -b -m --platform="ER-406-CASD" 
+  perf record -o ./omar ./test_gprof
+ perf record -o /mnt/flash/temps -p 2745 
+perf report -i temps
+
