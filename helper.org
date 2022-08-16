@@ -458,5 +458,5 @@ which nixbuilder
  соберем образ: ecorouter/ecobuild_image.sh -b -m --platform="ER-406-CASD" 
   perf record -o ./omar ./test_gprof
  perf record -o /mnt/flash/temps -p 2745 
-perf report -i temps
-
+perf report -i temps  
+https://www.brendangregg.com/perf.html  
