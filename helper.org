@@ -460,3 +460,125 @@ which nixbuilder
  perf record -o /mnt/flash/temps -p 2745 
 perf report -i temps  
 https://www.brendangregg.com/perf.html  
+
+** Сменить образ на b-image
+test#no boot b-image active 
+Image B is marked as not active
+test#boot a-image active 
+Image A is marked as active
+test#
+
+** valgrind
+  ищем демон в systemd.nix
+  пусть будет bgp
+  выкидываем все лишние штуки с тасксетом и и добавляем строчки
+  exec ip netns exec vr.pvr valgrind --track-fds=yes --tool=memcheck --leak-check=yes --show-reachable=yes ${config.thisPlatform.zebos.out}/bin/bgpd
+  добавляем в path valgrind
+  path = [ pkgs.utillinux pkgs.procps pkgs.valgrind pkgs.strace pkgs.oprofile pkgs.objdump pkgs.iproute];
+  на некоторых процессах типо imi не нужна команда ip netns
+  
+#+begin_example nix
+/* zebos */
+        er-bgpd = {
+          description = ''${brandInfo.brand} BGP daemon'';
+          path = [ pkgs.utillinux pkgs.procps pkgs.valgrind pkgs.strace pkgs.oprofile pkgs.objdump pkgs.iproute];
+	  ........./SOME_CODE
+          script = if targetPlatform == "universal" then ''
+            test "''${DATA_PLANE:0:10}" = "standalone" -o "''${DATA_PLANE:0:9}" = "speedtest" && exit 0
+            if test "''${DATA_PLANE:0:7}" = "release"; then
+              exec ${config.targetPlatform.broadwell.zebos.out}/bin/bgpd
+            else
+              exec ${config.thisPlatform.zebos.out}/bin/bgpd
+            fi
+          '' else ''
+          exec ip netns exec vr.pvr valgrind --track-fds=yes --tool=memcheck --leak-check=yes --show-reachable=yes ${config.thisPlatform.zebos.out}/bin/bgpd
+            '';
+        };
+#+end_example
+
+** diff по словам в емаксе
+открываем первый и второй файл
+ediff-regions-wordwise
+выбираем файлы
+выделяем ту часть, которую нужно диффнуть в первом файле, тыкаем C-M-c
+также и со вторым файлом
+смотрим на вывод
+** Список ядер линукс
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/refs/tags
+https://www.mellanox.com/downloads/ofed/MLNX_OFED-5.3-1.0.0.1/MLNX_OFED_SRC-debian-5.3-1.0.0.1.tgz
+https://www.mellanox.com/downloads/ofed/MLNX_OFED-5.7-1.0.2.0/MLNX_OFED_SRC-debian-5.7-1.0.2.0.tgz
+5.7-1.0.2.0
+/nix/store/56610kplra7rz158rpp2vhn81hjxjing-EcoRouterOS-ER-406-CASD-3.2.6.2.18628-detached.handmade-af08105-2022.08.25/EcoRouterOS-ER-406-CASD-3.2.6.2.18628-detached.handmade-af08105-2022.08.25.image
+/nix/store/36pca3hynw8i333fa8pya5h182hgycjc-ecorouter-factorycd-x86_64-linux.iso/iso/ecorouter-factorycd-x86_64-linux.iso
+```
+cp /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service /tmp
+chmod 777 /tmp/snmpd.service
+```
+Делаете изменения своим любимым редактором кода(vim/nano, на большее не расчитывайте)  
+```
+mount -o bind /tmp/snmpd.service /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service
+systemctl restart snmpd.service
+systemctl daemon-reload
+systemctl restart snmpd.service
+```
+/nix/store/3qv9anss7r0s2nqg20cchs6szyggwixb-ecorouter-factorycd-x86_64-linux.iso - factory withow ecobus
+/nix/store/2c6aycwap8rsn58j4f8dby4wjix4cr7d-ecorouter-livecd-debug-x86_64-linux.iso - iso without ecobus
+
+
+** objcdump
+evnech@evnech:~/dump$ chmod a+w nsm 
+evnech@evnech:~/dump$ cp images/ER-1004-LB-95/
+build/ image/ 
+evnech@evnech:~/dump$ cp images/ER-1004-LB-95/
+build/ image/ 
+evnech@evnech:~/dump$ cp images/ER-1004-LB-95/build/
+bird.debug.link-debug/          dp-router.debug.link-debug/     radius-client.debug.link-debug/ 
+configd.debug.link-debug/       ecobus.debug.link-debug/        zebos.debug.link-debug/         
+evnech@evnech:~/dump$ cp images/ER-1004-LB-95/build/zebos.debug.link-debug/lib/debug/
+bgpd            imish.orig      libribbgpd.so   libribimi.so    libriblib.so    libriboamd.so   libribpal.so    libribvrrpd.so  oamd            pimd            
+.build-id/      isisd           libribhal.so    libribisisd.so  libribmribd.so  libribonmd.so   libribpimd.so   mribd           onmd            ribd            
+imi             ldpd            libribimish.so  libribldpd.so   libribnsm.so    libribospfd.so  libribribd.so   nsm             ospfd           vrrpd           
+evnech@evnech:~/dump$ cp images/ER-1004-LB-95/build/zebos.debug.link-debug/lib/debug/
+bgpd            imish.orig      libribbgpd.so   libribimi.so    libriblib.so    libriboamd.so   libribpal.so    libribvrrpd.so  oamd            pimd            
+.build-id/      isisd           libribhal.so    libribisisd.so  libribmribd.so  libribonmd.so   libribpimd.so   mribd           onmd            ribd            
+imi             ldpd            libribimish.so  libribldpd.so   libribnsm.so    libribospfd.so  libribribd.so   nsm             ospfd           vrrpd           
+evnech@evnech:~/dump$ cp images/ER-1004-LB-95/build/zebos.debug.link-debug/lib/debug/nsm nsmd
+evnech@evnech:~/dump$ chmod a+w nsmd
+evnech@evnech:~/dump$ objcopy --add-gnu-debuglink=nsmd nsm
+evnech@evnech:~/dump$ gdb nsm
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04.1) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from nsm...
+Reading symbols from /home/evnech/dump/nsmd...
+(gdb) core-file core.nsm.2028 
+warning: exec file is newer than core file.
+[New LWP 2028]
+warning: Could not load shared library symbols for 22 libraries, e.g. /nix/store/iv5wzaky72ga0smnmwjdq43i1yhprqi7-ncurses-6.1-20190112/lib/libncursesw.so.6.
+Use the "info sharedlibrary" command to see the complete listing.
+Do you need "set solib-search-path" or "set sysroot"?
+Core was generated by `/nix/store/iq3l75v0ih12rzf7x9g4p6rg8s21aqxg-ecorouteros-release-1.4.4/bin/nsm'.
+Program terminated with signal SIGABRT, Aborted.
+#0  0x00007f0de664abe0 in ?? ()
+(gdb) bt\
+Quit
+(gdb) bt
+Undefined command: "btbt".  Try "help".
+(gdb) bt
+#0  0x00007f0de664abe0 in ?? ()
+#1  0x0000000000000000 in ?? ()
+(gdb) quit
+
+omar@omar-HP-ProDesk-400-G6-MT:~/some_shit$ gdb ribd
