@@ -44,7 +44,7 @@ def accumAllSpecs(path):
         spec_dict = createDictFromMatrix(spec_matrix)
         for key in spec_dict.keys():
                 accum_dict[k] = accum_dict.get(k, 0) + spec_dict[k]
-
+    return accum_dict
 def createSpecDocFileFromDict(accum_dict, new_file):
     doc=Document()
     doc.add_heading('Accum specification', 0)
