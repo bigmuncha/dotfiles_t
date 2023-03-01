@@ -91,6 +91,8 @@ accused - обвиняет
 admit - признаться
 
 
+
+
 doable - выполнимо
 buzzards - стервятники
 lingo - слэнг
@@ -221,3 +223,194 @@ obstensilty - упрямство
 dial - набирать номер
 skim - обезжиренное
 porch - порог
+debris - обломки
+beleath - внизу
+custody - попечение
+assets - имущество
+intend - намерен
+prying - любопытсво
+accomplish - выполнить
+punitive - карательный
+pearlescent - перламутровый
+ribbon - лента
+inkling - намек
+homicide - убийство
+temper - характер
+disaster - катастрофа
+blowback - отдача
+calamity - бедствие
+minnow - мелкая рыба
+awhile - какое то время
+prodigal - блудный сын
+unencumbered - свободный(не обременненный)
+bother - беспокоить
+fair enough - справедливо
+buck up - встряхнуться
+encumber - обременять
+allowance - разрешение
+dusclosure - разглашение
+fraud - мошенничество
+concealing - сокрытие
+contaminated - загрязненный
+file a suit - подать заявку
+counsler - консультант
+concur - соглашаться
+waterfall - водопад
+i mean it - я серьезно
+disturbance - нарушение
+domestic - внутренний(домашний)
+tresspassing - нарушение границ
+attentive - внимательный
+hausewarming - новоселье
+subtle - нежный
+sermon - проповедь
+vengeance - месть
+condolence - соболезнования
+sue - подайте в суд
+ex parte - односторонний порядок
+restraining - сдерживание
+brainer - головоломка
+errand - поручение
+tuition - плата за обучение 
+bookkeeper - бухгалтер
+dagger - кинжал
+suit yourself - делай что хочешь
+screw up - обложаться 
+cruel - жестокий
+intervation - вмешательство
+meticulousness - дотошность
+diligence - усердие
+stucco - штукатурка
+frankly - честно говоря
+dues - взносы
+sabbatical - творческий отпуск
+indefinite - бессрочный
+shoddy - не качественная
+dragging - тянется
+whore - шлюха
+investigation - расследование
+scythe - коса
+foresseable - обозримом
+barring - исключая
+
+interfior fixtures - предметы интерьера
+buttoned up tight - туго застегнуттый
+purse - сумочка
+ploy - уловка
+venture - рискованно
+another matter - другое дело
+overweening pride - чрезмерная гордость
+conclusion - заключения
+selfishness - эгоизм
+overwhelms - переполняет
+getergents - моющие средства
+bears up - терпит
+drowning - тонуть
+culpable - виновный
+accommodation - размещение
+completion - завершенность
+gesture - жест
+launder - отмыть(деньги)
+disposal - утилизация
+oblitirated - уничтожен
+domicile - место жительства
+readily apparent - ярко выраженный
+salvage - утилизация
+claws - когти
+unraveling - распутывание
+screw you - пошел ты
+statement - заявление
+consequences - последствия
+pressing charges - выдвигать обвинения
+prolonged - затяжной
+apprised - поставлен в известность
+turn the tide - изменить ход событий
+rosebushes - кусты роз
+carpentry - столярное дело
+negligible - незначительно
+spillage - расплескивание
+vestiges - остатки
+intestines - кишки
+sabre - сабля
+swatter - мухобойка
+layman - непрофессионал 
+pollutant - загрязнитель
+turds - какашки
+discernible - заметный
+inevitable - неизбежно
+insistent - настоичиво
+unimpeachable - безупречными
+alliviate - облегчить
+assurance - гарантия
+vest - жилет
+urge - побуждение
+is neither - не то ни другое
+stew - сушенное мясо
+flaw - недостаток
+plural - множетсвенно
+plasuible - правдоподобное
+caution - осторожность
+estranged - отчужденный
+reconciliation - примирение
+futile - бесполезный
+amend - исправление
+branch - ветка
+settle - уладить
+rhinoceros - носорог
+probing for weakness - прощупывание слобости
+enquires - запросы
+vague - нечеткий
+doff - снимаю
+proverbial - пресловутый
+darn - черт(чертовски)
+backfire - иметь неприятные последствия
+forfeit - отказаться
+entire - весь(целиком)
+bidding - торги
+humidity - влажность
+income - доход
+stealth - скрытность
+aspiring - стремящийся
+convict - осужден
+cranial - черепной
+rescue - спасение
+gimmick - трюк
+insulting - оскорбительный
+loyalty - верность
+pace - шагать
+premature - преждевременно
+participating учавствовать
+retaliate - отомстить
+swelling - припухлость
+plumbing - сантехника
+spitballing - плевать
+attitude adjustment - корректировка отношений
+condescending - высокомерный
+passionate - страстный
+attic - чердак
+handout - рекламная листовка
+thrilled - в восторге
+roll of the dice - бросок игральной кости
+doozy - головокружительный
+remorse - раскаяние
+relief - облегчение
+thorought - тщательный
+casings - гильзы
+hobo - бомж
+tidy - аккуратно
+neat - аккуратно
+paddle - весло
+substantial fee - существенный гонорар
+imminent-demise - неминуемая кончина
+to beg - умолять
+mending - исправление
+liability - ответственность
+to muddle through - продираться через
+merits - заслуживает
+reimburse - возместить
+daunting - обескураживающий
+eccentric - эксцентричный
+regretting - cожаления
+ceases - прекращается
+wedge - клин
+cargo - груз
