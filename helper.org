@@ -258,16 +258,17 @@ https://ohshitgit.com/ru
 ** Проект ecorouter
    iso/er-helpers/systemd.nix сервисы на роутере
 ** cns тесты
-   подключение к роутеру:\\
-     sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)"\\
-     навешиваешь ip адрес на интерфейс eth0 192.168.255.2 - конектишься по ссш\\
+подключение к роутеру:  
+#+begin_src 
+sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)" 
+#+end_src
+1. навешиваешь ip адрес на интерфейс eth0 192.168.255.2 - конектишься по ссш 
+2. если не создается тап интерфейс 
+3. ip link delete ecorouter0 
+4. token Sgdv9Thj6Aw1CPGLAkiM 
 
-   если не создается тап интерфейс\\
-   ip link delete ecorouter0\\
-   token Sgdv9Thj6Aw1CPGLAkiM\\
-
-   подключение к нодам
-   #+begin_src 
+подключение к нодам
+#+begin_src 
    docker pull hub.rdp.ru/scapy_test:latest
    docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy:latest" sh
    0 tcpdump -i eth0 -c 1 arp
@@ -285,7 +286,7 @@ https://ohshitgit.com/ru
    2000  docker run -it --rm --network container:node3 --cap-add NET_ADMIN busybox sh
    2001  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy:latest" sh
    2002  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy_test:latest" sh
-   #+end_src
+#+end_src
 
 ** configd
    #+begin_src 
@@ -304,6 +305,7 @@ https://ohshitgit.com/ru
     3. Спросят, хочешь ли ты обновить пакеты. Нажми y (или введи yes,
     если у тебя не настроен сокращённый режим ввода yes/no).
     4. Обязательно перезапусти EMACS.
+** emacs rectangle
     c-x r t вставка колонки
     kill-rectangle - выделить колонку
     yank-rectange- вставить(без выделения), просто под курсором
@@ -331,11 +333,11 @@ https://ohshitgit.com/ru
  grep -B 4 -A 3 nsm_ercp_snmp_cli.c.o compile_commands.json - вывод строк сверху и снизу
  
 ** emacs regexp
-   выбираешь helm-regexp
-   пишешь регекс пример:
-   исходная строка LLDP_ENCODE_PUT(some->ptr, mms);
-     рекекс LLDP_ENCODE_PUT(\([^;]+\)); TAB lldp_encode_put(\1, buf, size);
-     результат lldp_encode_putsome->ptr, mms, buf, size);
+1. выбираешь helm-regexp
+2. пишешь регекс пример:
+3. исходная строка LLDP_ENCODE_PUT(some->ptr, mms);
+4. рекекс LLDP_ENCODE_PUT(\([^;]+\)); TAB lldp_encode_put(\1, buf, size);
+5. результат lldp_encode_putsome->ptr, mms, buf, size);
 ** emacs обвести блок (org-mode)
   C-c C-, e
 
@@ -398,24 +400,31 @@ ldd /nix/store/yz2igiqs4rzsc68z1z9kjnvns0hjb6si-ecotap-cp/lib/libecotap.so
  #+end_src
 
 ** Проблемы с докером(ubuntu 22.04)
-Основная проблема с cgrpoup2
-Devices cgroup ins`t mounted
-https://wiki.archlinux.org/title/cgroups#Enable_cgroup_v1
-в /etc/default/grub к GRUB_CMDLINE_LINUX_DEFAULT надо добавить
-    systemd.unified_cgroup_hierarchy=0
-    Вот так выглядит моя строчка
-    GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet
-    systemd.unified_cgroup_hierarchy=0"
-    после выполнить sudo update-grub и ребутнуться
+#+begin_example
+Основная проблема с cgrpoup2 
+Devices cgroup ins`t mounted 
+https://wiki.archlinux.org/title/cgroups#Enable_cgroup_v1 
+в /etc/default/grub к GRUB_CMDLINE_LINUX_DEFAULT надо добавить 
+systemd.unified_cgroup_hierarchy=0 
+Вот так выглядит моя строчка 
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet 
+systemd.unified_cgroup_hierarchy=0"  
+после выполнить sudo update-grub и ребутнуться 
+#+end_example
 ** Containter not running
+#+begin_example
 удалить папку nix
 создать папку nix и дать ей права 0777
+#+end_example
 
 ** Пробросить папку из докера в хост систему
+#+begin_example
 найти скрипт который запускает docker-compose файл:
 which nixbuilder
 /usr/local/bin/nixbuilder
 найти строку с volumes
+#+end_example
+
 #+begin_src bash
     volumes:
       - ~:/workspace
@@ -427,6 +436,7 @@ which nixbuilder
 (я мапировал /nix в /nix)
 
 ** Создать задержку между пингом
+ #+begin_example
  скачать alpine image из hub.rdp.ru
  создать докер образ в GNS3
  проставить ip адрес на интерфейс
@@ -435,12 +445,13 @@ which nixbuilder
  вставляем и удаляем делей на интерфейсе
 
 
- ** Запуск профилировщика на железе
+ ,** Запуск профилировщика на железе
     Создать дебаг платформу(возможно дебаг платформа для твоей железки уже есть):
        Рассмотрим пример с ER-406-CAS
        В папке hardware_platform и в папке target_platform есть соответствующие nix файлы ER-406-CAS.nix
        Добавим в target_platform файл ER-406-CASD.nix(Debug)
        cкопируем туда такой код(смотреть ER-406-CAS, тут он подтянет настройки из hardware_platform)
+ #+end_example
  #+begin_src nix
      {
      hardwarePlatform = "ER-406-CAS";
@@ -469,13 +480,16 @@ which nixbuilder
      isRarelyUsed = true;
    }
 #+end_src
+  #+begin_example
   самые главные флаги здесь isDpDebug и isZebosDebug
   Пойдем в файл ecorouter/iso/upgrade.nix
   увидим, что
+  #+end_example
  #+begin_src nix    
  optionals pc.isDpDebug [
  linuxPackages.perf
 #+end_src
+ #+begin_example
  тоесть perf пакет добавляется только при выставленном флаге
  можем также добавить (временно пакеты типо valgring strace oprofile) прямо в список пакетов сверх
  соберем образ: ecorouter/ecobuild_image.sh -b -m --platform="ER-406-CASD" 
@@ -485,9 +499,11 @@ perf report -i temps
 perf record --call-graph dwarf -p 274
 perf record --call-graph fp -p 2745
 perf record --call-graph lbr -p 2745
+ #+end_example
 
 
 ** valgrind
+  #+begin_example
   ищем демон в systemd.nix
   пусть будет bgp
   выкидываем все лишние штуки с тасксетом и и добавляем строчки
@@ -495,6 +511,7 @@ perf record --call-graph lbr -p 2745
   добавляем в path valgrind
   path = [ pkgs.utillinux pkgs.procps pkgs.valgrind pkgs.strace pkgs.oprofile pkgs.objdump pkgs.iproute];
   на некоторых процессах типо imi не нужна команда ip netns
+  #+end_example
   
 #+begin_example nix
 /* zebos */
@@ -516,33 +533,21 @@ perf record --call-graph lbr -p 2745
 #+end_example
 
 ** diff по словам в емаксе
+#+begin_example
 открываем первый и второй файл
 ediff-regions-wordwise
 выбираем файлы
 выделяем ту часть, которую нужно диффнуть в первом файле, тыкаем C-M-c
 также и со вторым файлом
 смотрим на вывод
+#+end_example
 
 ** Список ядер линукс
+#+begin_example
 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/refs/tags
 https://www.mellanox.com/downloads/ofed/MLNX_OFED-5.3-1.0.0.1/MLNX_OFED_SRC-debian-5.3-1.0.0.1.tgz
 https://www.mellanox.com/downloads/ofed/MLNX_OFED-5.7-1.0.2.0/MLNX_OFED_SRC-debian-5.7-1.0.2.0.tgz
-5.7-1.0.2.0
-/nix/store/56610kplra7rz158rpp2vhn81hjxjing-EcoRouterOS-ER-406-CASD-3.2.6.2.18628-detached.handmade-af08105-2022.08.25/EcoRouterOS-ER-406-CASD-3.2.6.2.18628-detached.handmade-af08105-2022.08.25.image
-/nix/store/36pca3hynw8i333fa8pya5h182hgycjc-ecorouter-factorycd-x86_64-linux.iso/iso/ecorouter-factorycd-x86_64-linux.iso
-```
-cp /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service /tmp
-chmod 777 /tmp/snmpd.service
-```
-Делаете изменения своим любимым редактором кода(vim/nano, на большее не расчитывайте)  
-```
-mount -o bind /tmp/snmpd.service /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service
-systemctl restart snmpd.service
-systemctl daemon-reload
-systemctl restart snmpd.service
-```
-/nix/store/3qv9anss7r0s2nqg20cchs6szyggwixb-ecorouter-factorycd-x86_64-linux.iso - factory withow ecobus
-/nix/store/2c6aycwap8rsn58j4f8dby4wjix4cr7d-ecorouter-livecd-debug-x86_64-linux.iso - iso without ecobus
+#+end_example
 
 
 ** objcdump
@@ -569,11 +574,13 @@ sendp(p1kpts[0],iface='tap0')
 #+end_example
 
 ** настройка ldp(mpls l2 sircuit ) на двух роутерах
+#+begin_example
 пусть есть схема     Some_shit1<-ge1.Router1.ge0-><-ge0.Router2.ge1->Some_shit2
 между some_shit* можно построить виртуальный свитч, который будет просто гонять трафик между ними, прозрачно
 для этого между ge0 двух роутеров нужно настроить любую l3 связь, а в сторону some_shit на портах настроить mpls-l2-circuit
 для пользователей some_shit это будет выглядеть как прозрачный линк(типо воткнуты в один бридж), но на самом деле работает ldp протокол внутри
 настройка 
+#+end_example
 Router1:
 #+begin_example bash
 ecorouter#show running-config 
