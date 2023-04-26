@@ -1,52 +1,63 @@
 
-  
+
+** Обернуть регион в код блок org-mode
+#+begin_src 
+M-x org-insert-structure-template s
+#+end_src
 ** поиск пробелов в конфигд:
+#+begin_src 
 grep --exclude-dir='.git' --exclude-dir='.ecoplatform' --exclude-dir='.ecobuild' --exclude-dir='drtestsuites' --exclude-dir='ecopkgs' -r -n '[[:blank:]]$' .
+#+end_src
 
 ** сборка лайфсд
+#+begin_src 
 ecorouter/ecobuild_livecd.sh -b -m -D
+#+end_src
 
 ** удаление старых сборок
+#+begin_src 
 nix-channel --remove nixpkgs
 nix-channel --add https://files.rdp.ru/src/nixpkgs/nixpkgs-ecorouter nixpkgs
 nix-channel --update
+#+end_src
 
 ** если поломался nix образ:
+#+begin_src 
 rm /nix 
 nixbuilder - будут ошибки, но он создаст пустую папку(можно создать самому)
 sudo chown omar:omar /nix
+#+end_src
 
 ** включение ссш
+#+begin_src 
 sudo ip tuntap add tap0 mode tap
 sudo ip link set up dev tap0
 sudo ip a a 192.168.255.2/24 dev tap0
+#+end_src
+
+** сбросить ipv6 c linux интерфейса
+#+begin_src 
+sudo ip -f inet6 address flush dev tap0
+#+end_src
+(не стоит дергать в ап даун интерфейс, а то айпишник снова назначится)
 
 ** откат git
+#+begin_src 
 git reset HEAD~10 (количество коммитов в ветке)
 git status
 git add - добавляешь только нужные файлы
 git commit -m
 git push 
+#+end_src
 
 ** сабмодули гит
-   git submodule init
-   git submodule update --recursive
-** #####
-conf term
-interface omar
-ip address 1.1.1.1/24
-C^D
-port ge0
-service-instance omar1
-encapsulation untagged
-connect ip interface omar
-<<<<
-configure termina
-interface omar
-shutdown
-no shutdown
+#+begin_src 
+git submodule init
+git submodule update --recursive
+#+end_src
 
 ** развертка тестов
+#+begin_src 
 скачать docker-compose.yml(лежит в Downloads)
 cd Downloads/
  1999  docker-compose up -d 
@@ -61,11 +72,13 @@ cd Downloads/
     6  ./play.sh --iso-version=ecorouter-livecd-debug-x86_64-linux.iso --scenario=radius --keep-failed
     7  ./play.sh --iso-version=release --scenario=scenario-name --keep-failed
     8  ./play.sh --iso-version=ecorouter-livecd-debug-x86_64-linux.iso --scenario=radius --keep-failed
+    - ./play.sh --iso-version=ecorouter-livecd-debug-x86_64-linux.iso --scenario=l3vpn_impl_null --keep-failed
     9  ls
    10  history
    нужно завалить тест, чтобы получить управление докера
  -> подключение к виртуалкам
  docker exec -it cirunner1 telnet 0 2001
+#+end_src
 
 ** создание bmi интерфейса
    1. BMI
@@ -106,6 +119,7 @@ cd Downloads/
      interface bmi.1
      subscriber-map omar
      session-trigger ip
+#+begin_src 
 !
 no service password-encryption
 !
@@ -182,16 +196,21 @@ arp ip-collision-time 8
 arp incomplete-time 60
 !
 end
+#+end_src
 
 ** Perfomance
    http://ithare.com/infographics-operation-costs-in-cpu-clock-cycles/
    
 ** GV files
-   cat network.gv | dot -Tsvg > output.svg
-   batcat network.gv | dot -Tsvg > output.svg && eog output.svg &&rm output.svg
+#+begin_src 
+cat network.gv | dot -Tsvg > output.svg
+batcat network.gv | dot -Tsvg > output.svg && eog output.svg &&rm output.svg
+#+end_src
 
 ** древовидный вывод гит
-   git log --oneline --decorate --graph --all
+#+begin_src 
+git log --oneline --decorate --graph --all
+#+end_src
 
 ** gdb
    https://habr.com/ru/post/535960/
@@ -201,20 +220,19 @@ end
    x/20hex data -
    tldr - https://courses.cs.washington.edu/courses/cse351/20au/gdb/gdbnotes-x86-64.pdf
    атач к корке
-      gdb -c core.onmd.1260 /nix/store/3ah2vfkdxkf9ggc3qk1r09y5aiw4rvyk-ecorouteros-debug-1.4.4/bin/onmd
-      up - подняться по бектрейсу
+   gdb -c core.onmd.1260 /nix/store/3ah2vfkdxkf9ggc3qk1r09y5aiw4rvyk-ecorouteros-debug-1.4.4/bin/onmd
+   up - подняться по бектрейсу
       
    
 
 
 ** очистка конфига
+#+begin_src 
+copy empty-config startup-config 
+#+end_src
 
-   yarus#copy empty-config startup-config 
-d
-
-   token Sgdv9Thj6Aw1CPGLAkiM
-
-** https://ohshitgit.com/ru
+** Щитгит
+https://ohshitgit.com/ru
 
 ** образы для булата(сначала офишл фектори а потом bul 406 или perf)
    https://gitlab.rdp.ru/ecotelecom/ecotree/-/pipelines/338903
@@ -229,7 +247,7 @@ d
    ecorouter/ecobuild_image.sh --platform=ER-1004-2 -b -m
    0) Скачать фэктори образ, скачать боевой образ
    1) Загрузочная флешка
-      sudo dd if=PATH_TO_FACTORY/yarus-factorycd-x86_64-linux.iso of=/dev/sdb bs=2M; sudo sync
+      sudo dd if=PATH_TO_FACTORY/yarus-factorycd-x86_64-linux.iso of=/dev/sdb bs=2M sync
    2) Заходим в биос(DEL) выбираем загрузку с флешки
    3) Загружаемся, пишем YES, сохраняем passphrase, выдергиваем флешку, ребут
    4) Заходим в админа, идем в /mnt/flash/config.yaml
@@ -271,9 +289,10 @@ d
    2002  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy_test:latest" sh
 
 ** configd
+   #+begin_src 
    grep --exclude-dir='.git' --exclude-dir='.ecoplatform' --exclude-dir='.ecobuild' --exclude-dir='drtestsuites' --exclude-dir='ecopkgs' -r '[[:blank:]]$' . -n
+   #+end_src
 
-*
    
 ** zebos build
    обновить сабмодули в зебос проекте
@@ -307,12 +326,6 @@ d
 ** DP buckets
    [[/home/omar/Pictures/image.png]]
 
-
-   show -bridge убрать
-   lldp run -> lldp enable
-   lldp-agent remove
-   
-007025
 ** nmpa - скан портов (флаг -p)
 
 ** grep
@@ -328,6 +341,7 @@ d
   C-c C-, e
 
 ** snmp
+#+begin_src 
 !
 snmp-server enable snmp mgmt
 snmp-server community ecoBlaBla ro
@@ -343,24 +357,30 @@ snmp-server user snmpUserRo group main auth md5 11111111 priv des 22222222
    snmpget -v 3 -u  snmpUserRo -a MD5 -A 11111111 -l authPriv -x DES -X 22222222  192.168.255.1 .1.3.6.1.4.1.45555.2.1.1.16.1.1.2.2.2.2.3.1.1
    snmpget -v2c -c omar 192.168.255.1 .1.3.6.1.4.1.45555.2.1.1.16.1.1.2.2.2.2.3.1.1
    snmpget -c ecoBlaBla -v 2c 192.168.255.1 1.3.111.2.802.1.1.13.1.3.4.0
-er-1004-95-rev1
+#+end_src
+
 
 ** переписать файл nix/store
+#+begin_src 
 cp /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service /tmp
 chmod 777 /tmp/snmpd.service
 mount -o bind /tmp/snmpd.service /nix/store/6yr9qwdy8f4ynj87zshv4ws3wk8ps1l7-unit-snmpd.service/snmpd.service
 systemctl restart snmpd.service
 systemctl daemon-reload
 systemctl restart snmpd.service
+#+end_src
 
 ** число открытых дескрипторов у процесса
+       #+begin_src 
        cd /proc/1355/fd , где 1355 pid процесса
        ls -l /proc/1293/fd
+       #+end_src
        
 ** зависимости библиотеки
 ldd /nix/store/yz2igiqs4rzsc68z1z9kjnvns0hjb6si-ecotap-cp/lib/libecotap.so
 
 ** загрзка A-image B-image
+  #+begin_src 
   ecorouter#no boot b-image active 
   Image B is marked as not active
   ecorouter#boot 
@@ -369,13 +389,14 @@ ldd /nix/store/yz2igiqs4rzsc68z1z9kjnvns0hjb6si-ecotap-cp/lib/libecotap.so
   Image A is marked as active
   ecorouter#write 
   Building configuration...
+  #+end_src
 
 
-
-mlx_query_module_id:320 query_mcia_reg failed 
 ** Включить санитайзер
+ #+begin_src 
  CFLAGS+=-fsanitize=address -fno-omit-frame-pointer
  LDFLAGS+=-fsanitize=address
+ #+end_src
 
 ** Проблемы с докером(ubuntu 22.04)
 Основная проблема с cgrpoup2
@@ -387,6 +408,10 @@ https://wiki.archlinux.org/title/cgroups#Enable_cgroup_v1
     GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet
     systemd.unified_cgroup_hierarchy=0"
     после выполнить sudo update-grub и ребутнуться
+** Containter not running
+удалить папку nix
+создать папку nix и дать ей права 0777
+
 ** Пробросить папку из докера в хост систему
 найти скрипт который запускает docker-compose файл:
 which nixbuilder
@@ -411,40 +436,39 @@ which nixbuilder
  вставляем и удаляем делей на интерфейсе
 
 
-** Запуск профилировщика на железе
-
-Создать дебаг платформу(возможно дебаг платформа для твоей железки уже есть):
+ ** Запуск профилировщика на железе
+    Создать дебаг платформу(возможно дебаг платформа для твоей железки уже есть):
        Рассмотрим пример с ER-406-CAS
        В папке hardware_platform и в папке target_platform есть соответствующие nix файлы ER-406-CAS.nix
        Добавим в target_platform файл ER-406-CASD.nix(Debug)
        cкопируем туда такой код(смотреть ER-406-CAS, тут он подтянет настройки из hardware_platform)
  #+begin_src nix
-  {
-  hardwarePlatform = "ER-406-CAS";
-  brand = "ecorouter-develop";
-  description = "1U 1x modular platform (core i5) (Debug)";
-  dpdkConfig = {
-    CONFIG_RTE_LIBRTE_MBUF_DEBUG = true;
-  };
-  dpBuilds = [
-    {
-      name = "release";
-      defines = {
-        CONFIG_DEBUG_ENABLED = true;
-        CONFIG_LOGGER_FASTPATH_ENABLED = true;
-        CONFIG_LOGGER_PACKETFLOW_ENABLED = true;
-      };
-      makeFlags = {
-        CONFIG_CONTROL_PLANE_INCLUDED = "yes";
-        CONFIG_LOAD_SYMBOLS = "yes";
-        CONFIG_COMPILE_OPTIMIZATION_ENABLED = "no";
-      };
-    }
-  ];
-  isDpDebug = true;
-  isZebosDebug = true;
-  isRarelyUsed = true;
-}
+     {
+     hardwarePlatform = "ER-406-CAS";
+     brand = "ecorouter-develop";
+     description = "1U 1x modular platform (core i5) (Debug)";
+     dpdkConfig = {
+       CONFIG_RTE_LIBRTE_MBUF_DEBUG = true;
+     };
+     dpBuilds = [
+       {
+	 name = "release";
+	 defines = {
+	   CONFIG_DEBUG_ENABLED = true;
+	   CONFIG_LOGGER_FASTPATH_ENABLED = true;
+	   CONFIG_LOGGER_PACKETFLOW_ENABLED = true;
+	 };
+	 makeFlags = {
+	   CONFIG_CONTROL_PLANE_INCLUDED = "yes";
+	   CONFIG_LOAD_SYMBOLS = "yes";
+	   CONFIG_COMPILE_OPTIMIZATION_ENABLED = "no";
+	 };
+       }
+     ];
+     isDpDebug = true;
+     isZebosDebug = true;
+     isRarelyUsed = true;
+   }
 #+end_src
   самые главные флаги здесь isDpDebug и isZebosDebug
   Пойдем в файл ecorouter/iso/upgrade.nix
@@ -454,19 +478,15 @@ which nixbuilder
  linuxPackages.perf
 #+end_src
  тоесть perf пакет добавляется только при выставленном флаге
- можем также добавить (временно пакеты типо valgring strace oprofile) прямо в список пакетов сверху
+ можем также добавить (временно пакеты типо valgring strace oprofile) прямо в список пакетов сверх
  соберем образ: ecorouter/ecobuild_image.sh -b -m --platform="ER-406-CASD" 
   perf record -o ./omar ./test_gprof
  perf record -o /mnt/flash/temps -p 2745 
-perf report -i temps  
-https://www.brendangregg.com/perf.html  
+perf report -i temps
+perf record --call-graph dwarf -p 274
+perf record --call-graph fp -p 2745
+perf record --call-graph lbr -p 2745
 
-** Сменить образ на b-image
-test#no boot b-image active 
-Image B is marked as not active
-test#boot a-image active 
-Image A is marked as active
-test#
 
 ** valgrind
   ищем демон в systemd.nix
@@ -503,6 +523,7 @@ ediff-regions-wordwise
 выделяем ту часть, которую нужно диффнуть в первом файле, тыкаем C-M-c
 также и со вторым файлом
 смотрим на вывод
+
 ** Список ядер линукс
 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/refs/tags
 https://www.mellanox.com/downloads/ofed/MLNX_OFED-5.3-1.0.0.1/MLNX_OFED_SRC-debian-5.3-1.0.0.1.tgz
@@ -526,59 +547,431 @@ systemctl restart snmpd.service
 
 
 ** objcdump
-evnech@evnech:~/dump$ chmod a+w nsm 
-evnech@evnech:~/dump$ cp images/ER-1004-LB-95/
-build/ image/ 
-evnech@evnech:~/dump$ cp images/ER-1004-LB-95/
-build/ image/ 
-evnech@evnech:~/dump$ cp images/ER-1004-LB-95/build/
-bird.debug.link-debug/          dp-router.debug.link-debug/     radius-client.debug.link-debug/ 
-configd.debug.link-debug/       ecobus.debug.link-debug/        zebos.debug.link-debug/         
-evnech@evnech:~/dump$ cp images/ER-1004-LB-95/build/zebos.debug.link-debug/lib/debug/
-bgpd            imish.orig      libribbgpd.so   libribimi.so    libriblib.so    libriboamd.so   libribpal.so    libribvrrpd.so  oamd            pimd            
-.build-id/      isisd           libribhal.so    libribisisd.so  libribmribd.so  libribonmd.so   libribpimd.so   mribd           onmd            ribd            
-imi             ldpd            libribimish.so  libribldpd.so   libribnsm.so    libribospfd.so  libribribd.so   nsm             ospfd           vrrpd           
-evnech@evnech:~/dump$ cp images/ER-1004-LB-95/build/zebos.debug.link-debug/lib/debug/
-bgpd            imish.orig      libribbgpd.so   libribimi.so    libriblib.so    libriboamd.so   libribpal.so    libribvrrpd.so  oamd            pimd            
-.build-id/      isisd           libribhal.so    libribisisd.so  libribmribd.so  libribonmd.so   libribpimd.so   mribd           onmd            ribd            
-imi             ldpd            libribimish.so  libribldpd.so   libribnsm.so    libribospfd.so  libribribd.so   nsm             ospfd           vrrpd           
-evnech@evnech:~/dump$ cp images/ER-1004-LB-95/build/zebos.debug.link-debug/lib/debug/nsm nsmd
-evnech@evnech:~/dump$ chmod a+w nsmd
-evnech@evnech:~/dump$ objcopy --add-gnu-debuglink=nsmd nsm
-evnech@evnech:~/dump$ gdb nsm
-GNU gdb (Ubuntu 9.2-0ubuntu1~20.04.1) 9.2
-Copyright (C) 2020 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-Type "show copying" and "show warranty" for details.
-This GDB was configured as "x86_64-linux-gnu".
-Type "show configuration" for configuration details.
-For bug reporting instructions, please see:
-<http://www.gnu.org/software/gdb/bugs/>.
-Find the GDB manual and other documentation resources online at:
-    <http://www.gnu.org/software/gdb/documentation/>.
+#+begin_src 
+objcopy --add-gnu-debuglink=ribddebug ribd
+#+end_src
 
-For help, type "help".
-Type "apropos word" to search for commands related to "word"...
-Reading symbols from nsm...
-Reading symbols from /home/evnech/dump/nsmd...
-(gdb) core-file core.nsm.2028 
-warning: exec file is newer than core file.
-[New LWP 2028]
-warning: Could not load shared library symbols for 22 libraries, e.g. /nix/store/iv5wzaky72ga0smnmwjdq43i1yhprqi7-ncurses-6.1-20190112/lib/libncursesw.so.6.
-Use the "info sharedlibrary" command to see the complete listing.
-Do you need "set solib-search-path" or "set sysroot"?
-Core was generated by `/nix/store/iq3l75v0ih12rzf7x9g4p6rg8s21aqxg-ecorouteros-release-1.4.4/bin/nsm'.
-Program terminated with signal SIGABRT, Aborted.
-#0  0x00007f0de664abe0 in ?? ()
-(gdb) bt\
-Quit
-(gdb) bt
-Undefined command: "btbt".  Try "help".
-(gdb) bt
-#0  0x00007f0de664abe0 in ?? ()
-#1  0x0000000000000000 in ?? ()
-(gdb) quit
+** scp через пор и руткей
+#+begin_src 
+scp -i ~/routerkey -P 33223 root@176.62.191.129:/var/log/reports/report-20220914T174008MSK-3.2.6.2.18644-develop-ad45d9b-2022.09.05.tar.xz .
+#+end_src
 
-omar@omar-HP-ProDesk-400-G6-MT:~/some_shit$ gdb ribd
+** scapy
+
+#+begin_example python
+pkt = Ether(src=RandMAC(), dst="ff:ff:ff:ff:ff:ff")/ARP(op=1, hwsrc=RandMAC(),psrc="10.0.0.2/24", pdst="10.0.0.1")
+sendpfast(pkt, iface='enp4s0f3', loop=10000000)
+
+#открыть пикап файл и отправить пакет по индексу
+from scapy.all import * 
+from scapy.utils import rdpcap
+p1kpts = rdpcap("port0_rx.pcap")
+sendp(p1kpts[0],iface='tap0')
+#+end_example
+
+** настройка ldp(mpls l2 sircuit ) на двух роутерах
+пусть есть схема     Some_shit1<-ge1.Router1.ge0-><-ge0.Router2.ge1->Some_shit2
+между some_shit* можно построить виртуальный свитч, который будет просто гонять трафик между ними, прозрачно
+для этого между ge0 двух роутеров нужно настроить любую l3 связь, а в сторону some_shit на портах настроить mpls-l2-circuit
+для пользователей some_shit это будет выглядеть как прозрачный линк(типо воткнуты в один бридж), но на самом деле работает ldp протокол внутри
+настройка 
+Router1:
+#+begin_example bash
+ecorouter#show running-config 
+!
+no service password-encryption
+!
+hw mgmt ip 192.168.255.1/24
+!
+ip vrf management
+!
+class-map default
+!
+security default
+!
+security none vrf management
+!
+mpls l2-circuit test12 200 192.168.255.2 mode raw 
+mpls propagate-ttl
+mpls label mode per-prefix
+!
+ip domain-lookup
+!
+!
+ip pim register-rp-reachability
+!
+router ldp
+ router-id 192.168.255.1
+ targeted-peer ipv4 192.168.255.2
+  exit-targeted-peer-mode
+ transport-address ipv4 192.168.255.1
+!
+bgp extended-asn-cap 
+!
+ip route 192.168.255.2/32 192.168.12.1
+!
+line con 0
+line vty 0 39
+!
+port te0
+ mtu 9728
+ service-instance test
+  encapsulation untagged
+!
+port te1
+ mtu 9728
+ service-instance test
+  encapsulation untagged
+  mpls-l2-circuit test12 primary
+  vc-mtu 1500
+!
+port te2
+ mtu 9728
+!
+interface loopback.0
+ ip mtu 1500
+ ip address 192.168.255.1/32
+!
+interface test
+ ip mtu 1500
+ label-switching
+ connect port te0 service-instance test
+ ip address 192.168.12.2/24
+ ldp enable ipv4
+!
+arp request-interval 1
+arp request-number 3
+arp expiration-period 5
+arp solicitation-rate 2
+arp ip-collision-time 8
+arp incomplete-time 60
+!
+end
+#+end_example
+
+Router2:
+#+begin_example bash
+ecorouter#show running-config 
+!
+no service password-encryption
+!
+hw mgmt ip 192.168.255.1/24
+!
+ip vrf management
+!
+class-map default
+!
+security default
+!
+security none vrf management
+!
+mpls l2-circuit test12 200 192.168.255.1 mode raw 
+mpls propagate-ttl
+mpls label mode per-prefix
+!
+ip domain-lookup
+!
+!
+ip pim register-rp-reachability
+!
+router ldp
+ router-id 192.168.255.2
+ targeted-peer ipv4 192.168.255.1
+  exit-targeted-peer-mode
+ transport-address ipv4 192.168.255.2
+!
+bgp extended-asn-cap 
+!
+ip route 192.168.255.1/32 192.168.12.2
+!
+line con 0
+line vty 0 39
+!
+port te0
+ mtu 9728
+ service-instance test
+  encapsulation untagged
+!
+port te1
+ mtu 9728
+ service-instance test
+  encapsulation untagged
+  mpls-l2-circuit test12 primary
+  vc-mtu 1500
+!
+port te2
+ mtu 9728
+!
+interface loopback.0
+ ip mtu 1500
+ ip address 192.168.255.2/32
+!
+interface test
+ ip mtu 1500
+ label-switching
+ connect port te0 service-instance test
+ ip address 192.168.12.1/24
+ ldp enable ipv4
+!
+arp request-interval 1
+arp request-number 3
+arp expiration-period 5
+arp solicitation-rate 2
+arp ip-collision-time 8
+arp incomplete-time 60
+!
+end
+#+end_example 
+
+
+** собирать фэктори офишиал с вга
+#+begin_src 
+diff --git a/target_platform/demo-vga.nix b/target_platform/demo-vga.nix
+index 9503cf7..427e215 100644
+--- a/target_platform/demo-vga.nix
++++ b/target_platform/demo-vga.nix
+@@ -1,4 +1,4 @@
+ {
+   hardwarePlatform = "demo-vga";
+-  brand = "ecorouter-develop";
++  brand = "ecorouter-official";
+ }
+#+end_src
+
+
+** очистить своп
+  #+begin_src 
+  sudo swapoff -a; sudo swapon -a
+  #+end_src
+** очистить кэш мейн памяти(under sudo)
+  #+begin_src 
+  sync; echo 1 > /proc/sys/vm/drop_caches
+  #+end_src
+
+** find exclude
+#+begin_src 
+find zebos -type f \( -iname *.h -o -iname *.c \) | grep -v cli.h | grep -v cli.c |
+#+end_src
+
+** Настройка радиуса coa
+Настроить роутер(bmi, radius)
+#+begin_src 
+eco1#show running-config 
+!
+no service password-encryption
+!
+hostname eco1
+!
+!
+hw mgmt ip 192.168.255.1/24
+!
+ip vrf management
+!
+ip vrf omar
+!
+class-map default
+!
+radius-group RAD
+ mode active-standby
+ attribute mac default
+ attribute nas-port default
+ attribute username default
+ attribute user-password none
+ attribute accounting direction subscriber
+ attribute timeout sec
+ attribute style nokia
+ dead-time-interval 15 300
+ request-max-tries 5
+ request-timeout 2
+ transmission-rate threads 4 packets 256
+ radius-server 13.13.13.13 secret 12121212 priority 10
+ coa-client 13.13.13.13 secret 12121212
+!
+security default
+!
+security none vrf management
+!
+security default vrf omar
+!
+subscriber-aaa Dymmy
+ authentication radius RAD
+ accounting radius RAD
+!
+ip pool POOL0 192.168.10.2-192.168.10.3
+!
+ip pool TEST 3.3.3.2-3.3.3.255
+!
+ip pool omar 3.3.3.3-3.3.3.29
+!
+dhcp-server 1
+ lease 1040
+ mask 255.255.255.0
+ gateway 3.3.3.1
+ external radius RAD
+  default-pool TEST
+ pool POOL0 2
+ pool TEST 5
+  lease 1040
+  mask 255.255.255.0
+  gateway 3.3.3.1
+!
+mpls propagate-ttl
+mpls label mode per-prefix
+!
+hw reserved-cores 1
+control-plane
+ timeout violations 12
+ip domain-lookup
+filter-map policy ipv4 TEST1 10
+ match any any any
+ set accept
+!
+!
+ip pim register-rp-reachability
+ip pim vrf omar register-rp-reachability
+!
+router ospf 1 omar
+ bfd all-interfaces
+!
+bgp extended-asn-cap 
+!
+ip prefix-list TEST1 seq 5 permit any
+!
+line con 0
+line vty 0 39
+!
+service-policy OMAR
+ bandwidth percent 100
+!
+subscriber-policy TEST1
+ bandwidth in mbps 10
+ bandwidth out mbps 10
+ set filter-map in TEST1
+ set filter-map out TEST1
+!
+subscriber-service OMAR
+ set policy TEST1
+!
+subscriber-service TEST1
+ set policy TEST1
+!
+subscriber-map TEST1 10
+ match dynamic prefix-list TEST1
+ set idle-timeout 30
+ set session-timeout 1440
+ set subscriber-service TEST1
+ set aaa Dymmy
+!
+snmp-server enable snmp 
+snmp-server community omar rw
+!
+pppoe-profile 1
+ set session-timeout 1440
+ set idle-timeout 30
+ ppp max-configure 10
+ ppp max-failure 5
+ ppp max-echo 5
+ ppp max-terminate 1
+ ppp auth-req-limit 10
+ ppp rate-limit padi per-subscriber 60
+ ppp new-session-min-interval 1
+ ppp timeout-echo 10
+ ppp timeout-retry 3
+!
+port te0
+ mtu 9728
+ service-instance o
+  encapsulation untagged
+!
+port te1
+ mtu 9728
+ rate-limit dhcp-discovery 100
+ rate-limit arp 100
+ rate-limit pppoe-padi 100
+ service-instance o
+  encapsulation untagged
+!
+port te2
+ mtu 9728
+ service-instance o
+  encapsulation untagged
+!
+interface bmi.1
+ ip mtu 1500
+ connect port te1 service-instance o
+ dhcp-server 1
+ subscriber-map TEST1
+ session-trigger dhcp
+ reject-timeout 5
+ ip malicious-action drop
+ routes-install
+ ip address 3.3.3.1/24
+ rate-limit dhcp-discovery per-interface 20
+ rate-limit arp per-interface 20 in
+ rate-limit arp per-subscriber 0 in
+ rate-limit pppoe-padi per-interface 20
+ set pppoe-profile 1
+!
+interface dhcp
+ ip mtu 1500
+ ip address 5.5.5.1/24
+ rate-limit arp per-interface 0 in
+ rate-limit arp per-subscriber 0 in
+!
+interface urpf
+ ip mtu 1500
+ rate-limit arp per-interface 0 in
+ rate-limit arp per-subscriber 0 in
+!
+interface radius
+ ip mtu 1500
+ connect port te0 service-instance o
+ ip address 13.13.13.1/24
+ rate-limit arp per-interface 0 in
+ rate-limit arp per-subscriber 0 in
+!
+arp request-interval 1
+arp request-number 3
+arp expiration-period 5
+arp solicitation-rate 2
+arp ip-collision-time 8
+arp incomplete-time 60
+!
+end
+#+end_src
+
+Файлы на радиусе
+#+begin_src
+/ # cat /etc/raddb/mods-config/files/authorize 
+DEFAULT Auth-Type := Accept
+        NOKIA_BANDWIDTH += "i:p:2:pir=400000",
+	NOKIA_BANDWIDTH += "e:q:2:pir=600000"
+
+cat /etc/raddb/dictionary
+VENDOR Alc 6527
+BEGIN-VENDOR Alc
+ATTRIBUTE NOKIA_SERVICE 13 string
+ATTRIBUTE NOKIA_BANDWIDTH 126 string
+END-VENDOR Alc
+
+cat /etcp/raddb/clients.conf
+client 13.13.13.0/24 {
+    secret = 12121212
+}
+
+#+end_src
+
+Запуск радиуса
+#+begin_src
+radiusd -X
+#+end_src
+СОА реквест со стороны радиуса
+Acct-Session-id берется с роутера из вывода show subsribers bmi 1.1.1.1
+#+begin_src
+cat coa1.txt
+Acct-Session-Id=0000eb1c00000003
+NOKIA_SERVICE=TEST1
+NOKIA_BANDWIDTH="i:q:2:pir=400000"
+NOKIA_BANDWIDTH="e:p:2:pir=630000"
+cat coa1.txt | radclient -x 13.13.13.1:3799 coa '12121212'
+#+end_src
