@@ -213,17 +213,12 @@ git log --oneline --decorate --graph --all
 #+end_src
 
 ** gdb
-   https://habr.com/ru/post/535960/
-   https://habr.com/ru/post/491534/
-   https://visualgdb.com/gdbreference/commands/
-   x/20bc data - вывод в хексах массива data 20 elem
-   x/20hex data -
-   tldr - https://courses.cs.washington.edu/courses/cse351/20au/gdb/gdbnotes-x86-64.pdf
-   атач к корке
-   gdb -c core.onmd.1260 /nix/store/3ah2vfkdxkf9ggc3qk1r09y5aiw4rvyk-ecorouteros-debug-1.4.4/bin/onmd
-   up - подняться по бектрейсу
-      
-   
+   1. https://habr.com/ru/post/535960/
+   2. https://habr.com/ru/post/491534/
+   3. https://visualgdb.com/gdbreference/commands/
+   4. x/20bc data - вывод в хексах массива data 20 elem
+   5. x/20hex data -
+   6. tldr - https://courses.cs.washington.edu/courses/cse351/20au/gdb/gdbnotes-x86-64.pdf
 
 
 ** очистка конфига
@@ -252,8 +247,10 @@ https://ohshitgit.com/ru
    3) Загружаемся, пишем YES, сохраняем passphrase, выдергиваем флешку, ребут
    4) Заходим в админа, идем в /mnt/flash/config.yaml
    5) Пишем версию и сериал намбер
+      #+begin_src 
       version: 1
       serial_number: SERIAL12345
+      #+end_src
       пример https://gitlab.rdp.ru/ecotelecom/ecotree/-/wikis/config-yaml
    6) Вставляем флешку с боевым образом
    7) show images usb -> image install usb IMAGE 
@@ -261,15 +258,16 @@ https://ohshitgit.com/ru
 ** Проект ecorouter
    iso/er-helpers/systemd.nix сервисы на роутере
 ** cns тесты
-   подключение к роутеру:
-     sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)"
-     навешиваешь ip адрес на интерфейс eth0 192.168.255.2 - конектишься по ссш
+   подключение к роутеру:\\
+     sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)"\\
+     навешиваешь ip адрес на интерфейс eth0 192.168.255.2 - конектишься по ссш\\
 
-   если не создается тап интерфейс
-   ip link delete ecorouter0
-   token Sgdv9Thj6Aw1CPGLAkiM
+   если не создается тап интерфейс\\
+   ip link delete ecorouter0\\
+   token Sgdv9Thj6Aw1CPGLAkiM\\
 
    подключение к нодам
+   #+begin_src 
    docker pull hub.rdp.ru/scapy_test:latest
    docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy:latest" sh
    0 tcpdump -i eth0 -c 1 arp
@@ -287,6 +285,7 @@ https://ohshitgit.com/ru
    2000  docker run -it --rm --network container:node3 --cap-add NET_ADMIN busybox sh
    2001  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy:latest" sh
    2002  docker run -it --rm --network container:node3 --cap-add NET_ADMIN "hub.rdp.ru/scapy_test:latest" sh
+   #+end_src
 
 ** configd
    #+begin_src 
