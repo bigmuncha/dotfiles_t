@@ -981,3 +981,13 @@ NOKIA_BANDWIDTH="i:q:2:pir=400000"
 NOKIA_BANDWIDTH="e:p:2:pir=630000"
 cat coa1.txt | radclient -x 13.13.13.1:3799 coa '12121212'
 #+end_src
+
+
+** Включить худжпейджи
+#+begin_src
+sudo dpdk-hugepages.py -c
+sudo dpdk-hugepages.py -u
+sudo dpdk-hugepages.py -m
+sudo dpdk-hugepages.py -s
+sudo dpdk-hugepages.py -r 1G -p 1G --setup 1G
+#+end_src
