@@ -550,9 +550,10 @@ https://www.mellanox.com/downloads/ofed/MLNX_OFED-5.7-1.0.2.0/MLNX_OFED_SRC-debi
 #+end_example
 
 
-** objcdump
+** objdump
 #+begin_src 
 objcopy --add-gnu-debuglink=ribddebug ribd
+objdump -D ribd
 #+end_src
 
 ** scp через пор и руткей
