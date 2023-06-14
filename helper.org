@@ -995,11 +995,17 @@ sudo dpdk-hugepages.py -r 1G -p 1G --setup 1G
 
 
 ** Отключить ядро процессора от линукс шедулера
-Добавить строку isolcpus=N в файл /etc/default/grub (можно указать диапозон)
+Добавить строку isolcpus=N в файл /etc/default/grub (можно указать диапозон). Тут изолируется 2 ядро(нумерация начинается с 0)
 #+begin_src
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash systemd.unified_cgroup_hierarchy=0 isolcpus=1"
 #+end_src
 Обновить груб
 #+begin_src
 sudo update-grub
+#+end_src
+
+** Запустить бинарь на определенном ядре
+Запускаю на ядре 2(нумерация с нуля)
+#+begin_src
+taskset -c 1 ./main
 #+end_src
