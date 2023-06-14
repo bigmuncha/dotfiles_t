@@ -992,3 +992,14 @@ sudo dpdk-hugepages.py -m
 sudo dpdk-hugepages.py -s
 sudo dpdk-hugepages.py -r 1G -p 1G --setup 1G
 #+end_src
+
+
+** Отключить ядро процессора от линукс шедулера
+Добавить строку isolcpus=N в файл /etc/default/grub (можно указать диапозон)
+#+begin_src
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash systemd.unified_cgroup_hierarchy=0 isolcpus=1"
+#+end_src
+Обновить груб
+#+begin_src
+sudo update-grub
+#+end_src
