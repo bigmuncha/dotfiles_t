@@ -265,7 +265,7 @@ sudo nsenter --net --target "$(docker inspect --format '{{.State.Pid}}' node0)"
 1. навешиваешь ip адрес на интерфейс eth0 192.168.255.2 - конектишься по ссш 
 2. если не создается тап интерфейс 
 3. ip link delete ecorouter0 
-4. token Sgdv9Thj6Aw1CPGLAkiM 
+4. token 
 
 подключение к нодам
 #+begin_src 
