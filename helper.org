@@ -1012,4 +1012,13 @@ taskset -c 1 ./main
 
 ** clang-tidy
 run-clang-tidy-15 -extra-arg=-Wno-unknown-warning-option -use-color -p .
-
+.
+** Удалить ненужные строки из файла по вхождению(без регекса)                                                                                                                
+M-x delete-matching-lines                                                                                                                                                    
+                                                                                                                                                                             
+** Интерактивный режим magit                                                                                                                                                 
+M-x magit-status (s - забрать изменения, u- убрать изменения, k- удалить изменения )                                                                                         
+                                                                                                                                                                             
+** Отправить код в телеге                                                                                                                                                    
+``` CODE ``` C-u Ret                                                                                                                                                         
+             
