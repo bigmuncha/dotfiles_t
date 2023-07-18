@@ -1009,3 +1009,7 @@ sudo update-grub
 #+begin_src
 taskset -c 1 ./main
 #+end_src
+
+** clang-tidy
+run-clang-tidy-15 -extra-arg=-Wno-unknown-warning-option -use-color -p .
+
