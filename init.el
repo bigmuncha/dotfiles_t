@@ -9,10 +9,8 @@
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(c-basic-offset 4)
  '(counsel-find-file-extern-extensions '("mp4" "mkv" "xlsx" "pcap" "pcapng"))
- '(custom-enabled-themes '(light-blue))
  '(custom-safe-themes
-   '("ee77d69f78a1a17dcd141a58367fb5534dfdb07e94924a10a03c54190bb6a0ef" "0dfc663c336d18541ac6925f44e48cb7851f7463d7a3b201b8ae829a4b622501" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "0c6471dc1af916bfe2493300ddfec2d11c87e09d364e24b659a3c3de555c9e3d" "f0eb51d80f73b247eb03ab216f94e9f86177863fb7e48b44aacaddbfe3357cf1" "db5b906ccc66db25ccd23fc531a213a1afb500d717125d526d8ff67df768f2fc" "1ca05bdae217adeb636e9bc5e84c8f1d045be2c8004fafd5337d141d9b67a96f" "bd3b9675010d472170c5d540dded5c3d37d83b7c5414462737b60f44351fb3ed" "a0be7a38e2de974d1598cf247f607d5c1841dbcef1ccd97cded8bea95a7c7639" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
- '(flycheck-checker-error-threshold nil)
+   '("0c6471dc1af916bfe2493300ddfec2d11c87e09d364e24b659a3c3de555c9e3d" "f0eb51d80f73b247eb03ab216f94e9f86177863fb7e48b44aacaddbfe3357cf1" "db5b906ccc66db25ccd23fc531a213a1afb500d717125d526d8ff67df768f2fc" "1ca05bdae217adeb636e9bc5e84c8f1d045be2c8004fafd5337d141d9b67a96f" "bd3b9675010d472170c5d540dded5c3d37d83b7c5414462737b60f44351fb3ed" "a0be7a38e2de974d1598cf247f607d5c1841dbcef1ccd97cded8bea95a7c7639" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
  '(grep-find-ignored-files
    '(".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl" "*.elc" "*.lof" "*.glo" "*.idx" "*.lot" "*.fmt" "*.tfm" "*.class" "*.fas" "*.lib" "*.mem" "*.x86f" "*.sparcf" "*.dfsl" "*.pfsl" "*.d64fsl" "*.p64fsl" "*.lx64fsl" "*.lx32fsl" "*.dx64fsl" "*.dx32fsl" "*.fx64fsl" "*.fx32fsl" "*.sx64fsl" "*.sx32fsl" "*.wx64fsl" "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo" "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr" "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo" "compile_commands.json"))
  '(helm-buffer-max-length 40)
@@ -20,8 +18,9 @@
    '(".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl" "*.elc" "*.lof" "*.glo" "*.idx" "*.lot" "*.fmt" "*.tfm" "*.class" "*.fas" "*.lib" "*.mem" "*.x86f" "*.sparcf" "*.dfsl" "*.pfsl" "*.d64fsl" "*.p64fsl" "*.lx64fsl" "*.lx32fsl" "*.dx64fsl" "*.dx32fsl" "*.fx64fsl" "*.fx32fsl" "*.sx64fsl" "*.sx32fsl" "*.wx64fsl" "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo" "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr" "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo" "compile_commands.json"))
  '(history-delete-duplicates t)
  '(indent-tabs-mode t)
+ '(lsp-clangd-binary-path "/usr/bin/clangd-13")
  '(lsp-clients-clangd-args
-   '("--completion-style=detailed" "--limit-results=500" "--background-index" "--all-scopes-completion=1" "-j=8" "--clang-tidy=1" "--query-driver=/usr/bin/" "--header-insertion=never" "--pretty" "--log=verbose"))
+   '("--header-insertion=never" "--completion-style=detailed" "--limit-results=500" "--background-index" "--all-scopes-completion=1" "-j=6" "--clang-tidy=1"))
  '(lsp-imenu-sort-methods '(kind position))
  '(lsp-lens-enable t)
  '(lsp-semantic-tokens-apply-modifiers nil)
@@ -36,7 +35,7 @@
      ("\\.pcap\\'" . default)
      ("\\.pcapng\\'" . default)))
  '(package-selected-packages
-   '(ef-themes org-roam ement logview rmsbolt dockerfile-mode cmake-mode rjsx-mode js2-mode translate-mode google-translate direnv swiper all-the-icons-completion treemacs-icons-dired spaceline-all-the-icons treemacs-all-the-icons nasm-mode pcap-mode lsp-p4 p4 evil flycheck-clang-tidy dap-mode clojure-mode-extra-font-locking magit nix-mode counsel pyenv-mode exec-path-from-shell nix-sandbox log4j-mode flycheck-mypy flycheck-pyflakes poetry flycheck-pycheckers docker sudo-edit dired-ranger pandoc nano-modeline nano-theme elpy exwm rtags aggressive-indent python-mode ipython-shell-send highlight-escape-sequences highlight-function-calls fira-code-mode vterm ibuffer-vc ibuffer-project highlight-operators highlight-parentheses project color-identifiers-mode company-posframe telega doom-modeline clang-format json-mode yaml-mode clojure-mode lsp-mode helm projectile company-box smart-mode-line sml-modeline go-mode lsp-ui cider flycheck company))
+   '(nasm-mode pcap-mode lsp-p4 p4 evil flycheck-clang-tidy dap-mode clojure-mode-extra-font-locking magit nix-mode counsel pyenv-mode exec-path-from-shell nix-sandbox log4j-mode flycheck-mypy flycheck-pyflakes poetry flycheck-pycheckers docker sudo-edit dired-ranger yasnippet-snippets pandoc nano-modeline nano-theme elpy exwm rtags aggressive-indent python-mode ipython-shell-send highlight-escape-sequences highlight-function-calls fira-code-mode vterm ibuffer-vc ibuffer-project highlight-operators highlight-parentheses project color-identifiers-mode company-posframe telega doom-modeline clang-format json-mode yaml-mode clojure-mode lsp-mode helm projectile company-box smart-mode-line sml-modeline go-mode lsp-ui cider flycheck company))
  '(project-vc-ignores '(".cache/*" "*.cache*" "compile_commands.json"))
  '(projectile-globally-ignored-directories
    '(".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd"))
@@ -44,9 +43,7 @@
  '(projectile-globally-ignored-files '("TAGS" "compile_commands.json"))
  '(show-paren-mode t)
  '(telega-company-tooltip-always-below nil)
- '(telega-server-libs-prefix "/home/omar/tdlib/")
  '(tool-bar-mode nil)
- '(warning-suppress-types '((comp) (comp)))
  '(whitespace-display-mappings
    '((space-mark 32
 		 [183]
@@ -67,9 +64,11 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
-(setq package-selected-packages '(clojure-mode lsp-mode helm projectile
+(setq package-selected-packages '(clojure-mode lsp-mode helm projectile all-the-icons 
 					       company-box  smart-mode-line  sml-modeline go-mode lsp-ui
+					       telega ivy
 					       cider lsp-treemacs flycheck company ))
+
 
 ;;; Clojure settings
 (when (cl-find-if-not #'package-installed-p package-selected-packages)
@@ -87,12 +86,9 @@
 ;;(global-set-key (kbd "M-/") 'company-complete-common-or-cycle)
 (setq company-idle-delay 0)
 (setq company-global-modes '(not shell-mode))
-
+ 
 (add-hook 'c-mode-hook 'lsp)
 (add-hook 'c++-mode-hook 'lsp)
-
-(add-hook 'c-mode-hook 'rmsbolt-mode)
-(add-hook 'c++-mode-hook 'rmsbolt-mode)
 
 ;;; projectile
 (projectile-global-mode)
@@ -144,13 +140,13 @@
 (tool-bar-mode     -1) ;; отключаем tool-bar
 
 (setq redisplay-dont-pause t)  ;; лучшая отрисовка буфера
-(setq ring-bell-function 'ignore) ;; отключить звуковой сигнал
+;;(setq ring-bell-function 'ignore) ;; отключить звуковой сигнал
 
 
 ;;(setq scroll-margin            10) ;; сдвигать буфер верх/вниз когда курсор в 10 шагах от верхней/нижней границы  
-;;(setq scroll-conservatively 10000)
+(setq scroll-conservatively 10000)
 ;(load-theme 'nano-dark t)
-;;(load-theme 'light-blue t)
+(load-theme 'light-blue t)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -228,7 +224,7 @@
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3)))
  ; one line at a time
 (setq mouse-wheel-progressive-speed nil)            ; don't accelerate scrolling
-;(setq-default smooth-scroll-margin 0)
+(setq-default smooth-scroll-margin 0)
 (setq scroll-step 1
       scroll-margin 3
       scroll-conservatively 100000)
@@ -298,6 +294,7 @@
 ;;(global-visual-line-mode t)
 (add-hook 'prog-mode-hook 'visual-line-mode)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(setq telega-use-docker t)
 (add-hook 'telega-root-mode-hook 'visual-line-mode)
 (setq telega-chat--display-buffer-action
        '((display-buffer-reuse-window
@@ -307,7 +304,7 @@
 (define-key  telega-root-mode-map (kbd "<mouse-1>") #'push-button)
 (define-key  telega-chat-mode-map (kbd "<mouse-1>") #'push-button)
 
-;(telega-appindicator-mode 1)
+(telega-appindicator-mode 1)
 (add-hook 'telega-active-locations-mode-hook 'visual-line-mode
 	  )
 (add-hook 'telega-root-mode-hook 'visual-line-mode)
@@ -316,7 +313,7 @@
 (setq telega-open-file-function 'org-open-file)
 
 (global-set-key (kbd "M-m") 'projectile-grep)
-;;(setq telega-use-docker t)
+
 (ivy-mode 1)
 ;(setq ivy-use-virtual-buffers t)
 ;(setq ivy-count-format "(%d/%d) ")
@@ -325,21 +322,17 @@
 ;; (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 ;(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 (setq doc-view-continuous t)
-;;(add-hook 'c++-mode-hook 'yas-minor-mode)
-;;(add-hook 'c-mode-hook 'yas-minor-mode)
+(add-hook 'c++-mode-hook 'yas-minor-mode)
+(add-hook 'c-mode-hook 'yas-minor-mode)
 (global-set-key (kbd "M-s") 'swiper)
 
-(require 'ansi-color)
 (use-package log4j-mode
   :ensure t
   :disabled t
   :init
   (add-hook #'log4j-mode-hook #'view-mode)
   (add-hook #'log4j-mode-hook #'read-only-mode)
-  (add-hook #'log4j-mode-hook 'eos/turn-on-hl-line)
-  (add-hook #'log4j-mod-hook 'ansi-color-for-comint-mode-on)
-  )
-
+  (add-hook #'log4j-mode-hook 'eos/turn-on-hl-line))
 (use-package view
   :config
   (defun View-goto-line-last (&optional line)
@@ -369,10 +362,6 @@
 (global-set-key (kbd "C-=") 'hs-toggle-hiding)
 (add-hook 'c-mode-hook 'hide-ifdef-mode)
 (add-hook 'c++-mode-hook 'hide-ifdef-mode)
-
-;; (eval-after-load 'flycheck
-;;   '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
-
 ;;(add-hook 'c-mode-hook 'lsp-semantic-tokens-mode)
 ;;(add-hook 'c++-mode-hook 'lsp-semantic-tokens-mode)
 ;('font-lock-function-name-face)
@@ -395,16 +384,3 @@
        (js-mode "{" "}" "/[*/]" nil)
        (mhtml-mode "{\\|<[^/>]*?" "}\\|</[^/>]*[^/]>" "<!--" mhtml-forward nil)))
 
-;; (require 'ansi-color)
-;; (defun colorize-compilation-buffer ()
-;;   (toggle-read-only)
-;;   (ansi-color-apply-on-region compilation-filter-start (point))
-;;   (toggle-read-only))
-;; (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
-;; (add-hook 'compilation-filter-hook 'colorize-compilation-bu)
-
-(lsp-register-client
-    (make-lsp-client :new-connection (lsp-tramp-connection "clangd")
-                     :major-modes '(c++-mode c-mode)
-                     :remote? t
-                     :server-id 'clangd-remote))
