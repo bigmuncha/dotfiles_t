@@ -1031,7 +1031,8 @@ cat error.log | less -R
 ** PCI-express throughput
 [[https://en.wikipedia.org/wiki/PCI_Express]]
 
-[[https://www.diskmfr.com/pcie-interface-bandwidth-speed-calculation/]]
+[[https://www.diskmfr.com/pcie-interface-bandwidth-speed-calculation/]] 
+
 PCI-e x8 может прокачать 15.75 GB/s это около 126 Gb/s
 тоесть на одну карту с двумя портами по 100 Gb/s (200) мы можем
 максимум выжать 126                                                      
