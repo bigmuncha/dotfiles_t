@@ -1027,3 +1027,33 @@ grep -Irns waba6czzd1
 
 ** Вывести файл с цветом
 cat error.log | less -R
+
+** PCI-express throughput
+[[https://en.wikipedia.org/wiki/PCI_Express]]
+
+[[https://www.diskmfr.com/pcie-interface-bandwidth-speed-calculation/]]
+PCI-e x8 может прокачать 15.75 GB/s это около 126 Gb/s
+тоесть на одну карту с двумя портами по 100 Gb/s (200) мы можем
+максимум выжать 126                                                      
+4 * 126 = 504 Gbps будет максимальная производительность платформы       
+это 4 карты PCI-e gen4 x8                                                
+это при условии, что у нас идеальный код и идеальный проц                
+
+** Сборка dpdk
+#+begin_src
+meson -Dtests=false     -Dexamples=""     -Ddisable_drivers='baseband/*,compress/*,crypto/octeon*,event/*,net/dpaa*,net/kni,net/octeon*,raw/*,vdpa/*'     build \
+#+end_src
+для установки в спец директорию при команде ninja install нужно добавить опцию -Dprefix=~/ecotelecom/dpdk/build/export
+#+begin_src
+meson -Dtests=false  -Dprefix=~/ecotelecom/dpdk/build/export -Dexamples=""     -Ddisable_drivers='baseband/*,compress/*,crypto/octeon*,event/*,net/dpaa*,net/kni,net/octeon*,raw/*,vdpa/*'     build \
+#+end_src
+
+
+** Запуск нового докера:
+в хоум директории:
+docker-compose up -d
+docker exec -it nixbuilder bash
+sudo chmod a+w /tmp/nixbuilder/
+
+** Посмотреть интерфейсы - линии pci
+ lshw -c network -businfo
