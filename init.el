@@ -18,9 +18,9 @@
    '(".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl" "*.elc" "*.lof" "*.glo" "*.idx" "*.lot" "*.fmt" "*.tfm" "*.class" "*.fas" "*.lib" "*.mem" "*.x86f" "*.sparcf" "*.dfsl" "*.pfsl" "*.d64fsl" "*.p64fsl" "*.lx64fsl" "*.lx32fsl" "*.dx64fsl" "*.dx32fsl" "*.fx64fsl" "*.fx32fsl" "*.sx64fsl" "*.sx32fsl" "*.wx64fsl" "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo" "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr" "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo" "compile_commands.json"))
  '(history-delete-duplicates t)
  '(indent-tabs-mode t)
- '(lsp-clangd-binary-path "/usr/bin/clangd-13")
+;'(lsp-clangd-binary-path "/usr/bin/clangd")
  '(lsp-clients-clangd-args
-   '("--header-insertion=never" "--completion-style=detailed" "--limit-results=500" "--background-index" "--all-scopes-completion=1" "-j=6" "--clang-tidy=1"))
+   '("--header-insertion=never" "--completion-style=detailed" "--limit-results=500" "--background-index" "--all-scopes-completion=1" "-j=6" "--clang-tidy=1" "--log=verbose"))
  '(lsp-imenu-sort-methods '(kind position))
  '(lsp-lens-enable t)
  '(lsp-semantic-tokens-apply-modifiers nil)
@@ -66,7 +66,7 @@
 (package-initialize)
 (setq package-selected-packages '(clojure-mode lsp-mode helm projectile all-the-icons 
 					       company-box  smart-mode-line  sml-modeline go-mode lsp-ui
-					       telega ivy
+					       telega ivy highlight-operators nix-mode magit nasm-mode
 					       cider lsp-treemacs flycheck company ))
 
 
@@ -169,7 +169,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ricty Diminished" :foundry "PfEd" :slant normal :weight normal :height 148 :width normal))))
+ '(default ((t (:family "Ricty Diminished" :foundry "PfEd" :slant normal :weight normal :height 158 :width normal))))
  '(lsp-face-semhl-function ((t (:inherit font-lock-keyword-face))))
  '(lsp-face-semhl-implementation ((t (:inherit font-lock-keyword-face :weight bold))))
  '(lsp-face-semhl-macro ((t (:inherit font-lock-keyword-face))))
@@ -322,8 +322,8 @@
 ;; (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 ;(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 (setq doc-view-continuous t)
-(add-hook 'c++-mode-hook 'yas-minor-mode)
-(add-hook 'c-mode-hook 'yas-minor-mode)
+;(add-hook 'c++-mode-hook 'yas-minor-mode)
+;(add-hook 'c-mode-hook 'yas-minor-mode)
 (global-set-key (kbd "M-s") 'swiper)
 
 (use-package log4j-mode
