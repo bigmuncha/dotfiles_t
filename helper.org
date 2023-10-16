@@ -1063,5 +1063,12 @@ sudo chmod a+w /tmp/nixbuilder/
 записать в .bashrc
 PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
 
+** Работающий писюк(vpcs) в федоре:
+[[https://github.com/tgerov/vpcs.spec]]
+
+ $ sudo dnf copr enable tgerov/vpcs
+
+ $ sudo dnf install vpcs
+
 
 
